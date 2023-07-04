@@ -44,11 +44,22 @@ def test_linked_list_insert_at():
     linked_list.insert_at(3, 103)
     linked_list.insert_at(5, 105)
     linked_list.insert_at(8, 108)
+    
+def test_linked_list_traverse():
+    linked_list = LinkedList()
+    linked_list.insert_last(1)
+    linked_list.insert_last(1)
+    linked_list.insert_last(3)
+    linked_list.insert_last(5)
+    linked_list.insert_last(8)
+    linked_list.insert_last(13)
+    linked_list.insert_last(21)
+    linked_list.traverse(print)
+    
 
 
 if __name__ == '__main__':
-    print('Main on test_linked_list.py executed!')
-    print(sys.path)
     test_linked_list_insert_last()
     test_linked_list_insert_first()
     test_linked_list_insert_at()
+    test_linked_list_traverse()

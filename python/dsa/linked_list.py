@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-print('Importing linked_list.py...')
+from typing import Callable
 
 
 class OutOfBoundsException(Exception):
@@ -21,6 +21,15 @@ class LinkedListNode():
         
     def get_next(self) -> 'LinkedListNode':
         return self._next
+    
+    def get_value(self) -> int:
+        return self._value
+    
+    def __repr__(self) -> str:
+        return 'LinkedListNode()'
+    
+    def __str__(self) -> str:
+        return str(self.get_value())
 
 
 class LinkedList():
@@ -68,6 +77,12 @@ class LinkedList():
         if self._first_node == None:
             return True
         return False
+    
+    def traverse(self, callback_function: Callable) -> None:
+        current_node: LinkedListNode = self._first_node
+        while current_node != None:
+            callback_function(current_node)
+            current_node = current_node.get_next()
 
 
 if __name__ == '__main__':
