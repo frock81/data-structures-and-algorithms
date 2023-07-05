@@ -49,13 +49,6 @@ class BinarySearchTreeNode:
         if self._right_child is not None:
             return self._right_child.get_value()
         return None
-        
-    def traverse(self, callback_function: Callable):
-        callback_function(self)
-        if self._left_child is not None:
-            self._left_child.traverse(callback_function)
-        if self._right_child is not None:
-            self._right_child.traverse(callback_function)
             
     def insert(self, insert_node: 'BinarySearchTreeNode') -> None:
         insert_value = insert_node.get_value()
@@ -73,6 +66,22 @@ class BinarySearchTreeNode:
                 self.set_right_child(insert_node)
                 return
             right_child.insert(insert_node)
+
+    def traverse(self, callback_function: Callable):
+        callback_function(self)
+        if self._left_child is not None:
+            self._left_child.traverse(callback_function)
+        if self._right_child is not None:
+            self._right_child.traverse(callback_function)
+
+    def contains(self, search_value: int)-> bool:
+        if self._value == search_value:
+            return True
+        if self._left_child is not None and search_value < self._value:
+            return self._left_child.contains(search_value)
+        if self._right_child is not None and search_value > self._value:
+            return self._right_child.contains(search_value)
+        return False
     
     def __repr__(self) -> str:
         return 'BinarySearchTreeNode()'
@@ -86,6 +95,11 @@ class BinarySearchTreeNode:
             right_value = str(self._right_child.get_value())
         return str(f'node: "{self.get_value()}" ( left: "{left_value}" , '
                    f'right: "{right_value}" )')
+        
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, BinarySearchTreeNode):
+            return False
+        return self._value == __value.get_value()
 
 class BinarySearchTree:
     
@@ -99,12 +113,17 @@ class BinarySearchTree:
     
     def insert(self, value: int) -> bool:
         insert_node = BinarySearchTreeNode(value)
-        if self.is_empty():
+        if self._root_node is None:
             self._root_node = insert_node
             return
         self._root_node.insert(insert_node)
 
     def traverse(self, callback_function: Callable):
-        if self.is_empty():
+        if self._root_node is None:
             return
         self._root_node.traverse(callback_function)
+        
+    def contains(self, value: int) -> bool:
+        if self._root_node is None:
+            return False
+        return self._root_node.contains(value)
