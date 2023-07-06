@@ -67,12 +67,47 @@ class BinarySearchTreeNode:
                 return
             right_child.insert(insert_node)
 
-    def traverse(self, callback_function: Callable):
+    def traverse_preorder(self, callback_function: Callable):
         callback_function(self)
         if self._left_child is not None:
-            self._left_child.traverse(callback_function)
+            self._left_child.traverse_preorder(callback_function)
         if self._right_child is not None:
-            self._right_child.traverse(callback_function)
+            self._right_child.traverse_preorder(callback_function)
+
+    def traverse_inorder(self, callback_function: Callable):
+        if self._left_child is not None:
+            self._left_child.traverse_inorder(callback_function)
+        callback_function(self)
+        if self._right_child is not None:
+            self._right_child.traverse_inorder(callback_function)
+
+    def traverse_postorder(self, callback_function: Callable):
+        if self._left_child is not None:
+            self._left_child.traverse_postorder(callback_function)
+        if self._right_child is not None:
+            self._right_child.traverse_postorder(callback_function)
+        callback_function(self)
+
+    def traverse_preorder_reverse(self, callback_function: Callable):
+        callback_function(self)
+        if self._right_child is not None:
+            self._right_child.traverse_preorder_reverse(callback_function)
+        if self._left_child is not None:
+            self._left_child.traverse_preorder_reverse(callback_function)
+
+    def traverse_inorder_reverse(self, callback_function: Callable):
+        if self._right_child is not None:
+            self._right_child.traverse_inorder_reverse(callback_function)
+        callback_function(self)
+        if self._left_child is not None:
+            self._left_child.traverse_inorder_reverse(callback_function)
+
+    def traverse_postorder_reverse(self, callback_function: Callable):
+        if self._right_child is not None:
+            self._right_child.traverse_postorder_reverse(callback_function)
+        if self._left_child is not None:
+            self._left_child.traverse_postorder_reverse(callback_function)
+        callback_function(self)
 
     def contains(self, search_value: int)-> bool:
         if self._value == search_value:
@@ -104,7 +139,7 @@ class BinarySearchTreeNode:
 class BinarySearchTree:
     
     def __init__(self):
-        self._root_node = None
+        self._root_node: BinarySearchTreeNode = None
         
     def is_empty(self) -> bool:
         if self._root_node is None:
@@ -118,10 +153,16 @@ class BinarySearchTree:
             return
         self._root_node.insert(insert_node)
 
-    def traverse(self, callback_function: Callable):
+    def traverse(self,
+                 callback_function: Callable,
+                 order_prefix: str='pre',
+                 reverse: bool = False):
         if self._root_node is None:
             return
-        self._root_node.traverse(callback_function)
+        method_name = (f"traverse_{order_prefix}order"
+                       f"{'_reverse' if reverse else ''}")
+        traversal_method = self._root_node.__getattribute__(method_name)
+        traversal_method(callback_function)
         
     def contains(self, value: int) -> bool:
         if self._root_node is None:

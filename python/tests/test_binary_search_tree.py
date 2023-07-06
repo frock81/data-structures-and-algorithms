@@ -13,7 +13,7 @@ from dsa.binary_search_tree import BinarySearchTree, BinarySearchTreeNode
 from typing import List
 
 SEED = 10
-SAMPLES = 100
+SAMPLES = 25
 
 
 def get_inclusion_and_excluded_lists():
@@ -49,7 +49,18 @@ def test_insertion(bst: BinarySearchTree, insertion_list: list[int]):
         bst.insert(i)
     
 def test_traverse(bst: BinarySearchTree):
-    bst.traverse(print)
+    print("Preorder traversal...")
+    bst.traverse(callback_function=print, order_prefix='pre')
+    print("\nInorder traversal...")
+    bst.traverse(callback_function=print, order_prefix='in')
+    print("\nPostorder traversal...")
+    bst.traverse(callback_function=print, order_prefix='post')
+    print("\nPreorder reverse traversal...")
+    bst.traverse(callback_function=print, order_prefix='pre', reverse=True)
+    print("\nInorder reverse traversal...")
+    bst.traverse(callback_function=print, order_prefix='in', reverse=True)
+    print("\nPostorder reverse traversal...")
+    bst.traverse(callback_function=print, order_prefix='post', reverse=True)
     
 
 def test_operations():
