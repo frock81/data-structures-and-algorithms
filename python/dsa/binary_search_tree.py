@@ -6,7 +6,7 @@ from typing import Any, Callable
 
 
 class BinarySearchTreeNode:
-    
+
     def __init__(self,
                  value: int,
                  left_value: int = None,
@@ -18,16 +18,16 @@ class BinarySearchTreeNode:
             self._left_child = BinarySearchTreeNode(value=left_value)
         if right_value is not None:
             self._right_child = BinarySearchTreeNode(value=right_value)
-        
+
     def get_value(self) -> int:
         return self._value
-    
+
     def set_left_child(self, bst_node: 'BinarySearchTreeNode') -> None:
         self._left_child = bst_node
-        
+
     def get_left_child(self) -> 'BinarySearchTreeNode':
         return self._left_child
-    
+
     def set_left_child_by_value(self, value: int) -> None:
         self._left_child = BinarySearchTreeNode(value=value)
 
@@ -35,13 +35,13 @@ class BinarySearchTreeNode:
         if self._left_child is not None:
             return self._left_child.get_value()
         return None
-    
+
     def set_right_child(self, bst_node: 'BinarySearchTreeNode') -> None:
         self._right_child = bst_node
-        
+
     def get_right_child(self) -> 'BinarySearchTreeNode':
         return self._right_child
-    
+
     def set_right_child_by_value(self, value: int) -> None:
         self._right_child = BinarySearchTreeNode(value=value)
 
@@ -49,7 +49,7 @@ class BinarySearchTreeNode:
         if self._right_child is not None:
             return self._right_child.get_value()
         return None
-            
+
     def insert(self, insert_node: 'BinarySearchTreeNode') -> None:
         insert_value = insert_node.get_value()
         if insert_value == self._value:
@@ -117,10 +117,10 @@ class BinarySearchTreeNode:
         if self._right_child is not None and search_value > self._value:
             return self._right_child.contains(search_value)
         return False
-    
+
     def __repr__(self) -> str:
         return 'BinarySearchTreeNode()'
-    
+
     def __str__(self) -> str:
         left_value: str = ''
         if self._left_child is not None:
@@ -130,22 +130,22 @@ class BinarySearchTreeNode:
             right_value = str(self._right_child.get_value())
         return str(f'node: "{self.get_value()}" ( left: "{left_value}" , '
                    f'right: "{right_value}" )')
-        
+
     def __eq__(self, __value: object) -> bool:
         if not isinstance(__value, BinarySearchTreeNode):
             return False
         return self._value == __value.get_value()
 
 class BinarySearchTree:
-    
+
     def __init__(self):
         self._root_node: BinarySearchTreeNode = None
-        
+
     def is_empty(self) -> bool:
         if self._root_node is None:
             return True
         return False
-    
+
     def insert(self, value: int) -> bool:
         insert_node = BinarySearchTreeNode(value)
         if self._root_node is None:
@@ -163,7 +163,7 @@ class BinarySearchTree:
                        f"{'_reverse' if reverse else ''}")
         traversal_method = self._root_node.__getattribute__(method_name)
         traversal_method(callback_function)
-        
+
     def contains(self, value: int) -> bool:
         if self._root_node is None:
             return False
