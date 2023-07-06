@@ -134,18 +134,17 @@ def test_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
     print()
     for_deletion_values = get_values_to_be_deleted(
         included_list)
-    keeped_values = get_keeped_values(included_list=included_list,
-                                      deletion_list=for_deletion_values)
     print("Valores a serem excluídos da árvore")
     print(f"{for_deletion_values}\n")
     for value_to_be_deleted in for_deletion_values:
         print(f"Deleting value {value_to_be_deleted}")
         bst.delete(value=value_to_be_deleted)
+        assert not bst.contains(value_to_be_deleted)
     print("\nTree after deletion:")
     bst.traverse(print)
     print()
-    for deleted_value in for_deletion_values:
-        assert not bst.contains(deleted_value)
+    keeped_values = get_keeped_values(included_list=included_list,
+                                      deletion_list=for_deletion_values)
     for keeped_value in keeped_values:
         assert bst.contains(keeped_value)
     print("All delete assertions passed.")
