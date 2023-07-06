@@ -110,7 +110,7 @@ def get_positions_to_be_removed() -> list[int]:
         positions.add(random.randint(0, amount_to_remove))
     return list(positions)
 
-def get_values_from_included_to_be_deleted(
+def get_values_to_be_deleted(
         included_list: list[int]
     ) -> None:
     print("Included_list:")
@@ -121,11 +121,34 @@ def get_values_from_included_to_be_deleted(
     return ([included_list[x] for x in range(len(included_list))
              if x in positions_to_be_removed])
 
+
+def get_keeped_values(included_list: list[int],
+                      deletion_list: list[int]) -> list[int]:
+    return ([included_list[x]
+             for x in range(len(included_list))
+             if included_list[x] not in deletion_list])
+
 def test_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
-    for_deletion_values = get_values_from_included_to_be_deleted(
+    print("Tree before deletion:")
+    bst.traverse(print)
+    print()
+    for_deletion_values = get_values_to_be_deleted(
         included_list)
+    keeped_values = get_keeped_values(included_list=included_list,
+                                      deletion_list=for_deletion_values)
     print("Valores a serem excluídos da árvore")
-    print(for_deletion_values)
+    print(f"{for_deletion_values}\n")
+    for value_to_be_deleted in for_deletion_values:
+        print(f"Deleting value {value_to_be_deleted}")
+        bst.delete(value=value_to_be_deleted)
+    print("\nTree after deletion:")
+    bst.traverse(print)
+    print()
+    for deleted_value in for_deletion_values:
+        assert not bst.contains(deleted_value)
+    for keeped_value in keeped_values:
+        assert bst.contains(keeped_value)
+    print("All delete assertions passed.")
 
 
 def test_operations() -> None:

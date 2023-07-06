@@ -168,3 +168,6 @@ class BinarySearchTree:
         if self._root_node is None:
             return False
         return self._root_node.contains(value)
+
+    def delete(self, value: int) -> None:
+        pass
