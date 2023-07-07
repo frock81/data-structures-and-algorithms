@@ -191,22 +191,43 @@ def test_deletion() -> None:
     test_random_deletion()
 
 
-def test_operations() -> None:
+def test_insertion_wrapper() -> tuple[BinarySearchTree, list[int], list[int]]:
     bst = BinarySearchTree()
     print_h1('INSERTION TEST')
     insertion_list, excluded_list = get_inclusion_and_excluded_lists()
     test_insertion(bst=bst, insertion_list=insertion_list)
+    assert bst.count() == len(insertion_list)
+    return bst, insertion_list, excluded_list
+
+
+def test_traverse_wrapper(bst: BinarySearchTree) -> None:
     print_h1('TRAVERSAL TEST')
     print("Empty BST:")
     test_traverse(BinarySearchTree())
-    print("\nNot empty BST:")
+    print("\nNon empty BST:")
     test_traverse(bst)
+
+
+def test_search_wrapper(bst: BinarySearchTree,
+                        included_list: list[int],
+                        excluded_list: list[int]) -> None:
     print_h1('SEARCH TEST')
     test_search(bst=bst,
-                included_list=list(set(insertion_list)),
+                included_list=list(set(included_list)),
                 excluded_list=excluded_list)
     print_h1('DELETION TEST')
-    test_deletion(bst=bst, included_list=insertion_list)
+
+
+def test_operations() -> None:
+    bst: BinarySearchTree
+    insertion_list: list[int]
+    excluded_list: list[int]
+    bst, insertion_list, excluded_list = test_insertion_wrapper()
+    test_traverse_wrapper(bst=bst)
+    test_search_wrapper(bst=bst,
+                        included_list=insertion_list,
+                        excluded_list=excluded_list)
+    # test_deletion(bst=bst, included_list=insertion_list)
 
 
 if __name__ == '__main__':
