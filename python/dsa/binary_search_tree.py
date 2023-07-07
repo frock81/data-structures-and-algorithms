@@ -109,7 +109,7 @@ class BinarySearchTreeNode:
             self._left_child.traverse_postorder_reverse(callback_function)
         callback_function(self)
 
-    def contains(self, search_value: int)-> bool:
+    def contains(self, search_value: int) -> bool:
         if self._value == search_value:
             return True
         if self._left_child is not None and search_value < self._value:
@@ -117,6 +117,9 @@ class BinarySearchTreeNode:
         if self._right_child is not None and search_value > self._value:
             return self._right_child.contains(search_value)
         return False
+
+    def delete(self, deletion_value: int) -> None:
+        pass
 
     def __repr__(self) -> str:
         return 'BinarySearchTreeNode()'
@@ -170,4 +173,9 @@ class BinarySearchTree:
         return self._root_node.contains(value)
 
     def delete(self, value: int) -> None:
-        pass
+        if self._root_node is None:
+            return
+        return self._root_node.delete(value)
+
+    def count(self) -> int:
+        return 0

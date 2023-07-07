@@ -110,6 +110,7 @@ def get_positions_to_be_removed() -> list[int]:
         positions.add(random.randint(0, amount_to_remove))
     return list(positions)
 
+
 def get_values_to_be_deleted(
         included_list: list[int]
     ) -> None:
@@ -128,7 +129,8 @@ def get_keeped_values(included_list: list[int],
              for x in range(len(included_list))
              if included_list[x] not in deletion_list])
 
-def test_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
+
+def test_random_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
     print("Tree before deletion:")
     bst.traverse(print)
     print()
@@ -148,6 +150,45 @@ def test_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
     for keeped_value in keeped_values:
         assert bst.contains(keeped_value)
     print("All delete assertions passed.")
+
+
+def test_no_children_deletion() -> None:
+    bst = BinarySearchTree()
+    bst.insert(1)
+    bst.insert(0)
+    bst.insert(2)
+    print("Tree before deletion:")
+    bst.traverse(print)
+    print("Tree after deleting 0:")
+    print("Tree after insertions:")
+    bst.traverse(print)
+    assert bst.count() == 3
+    print("Tree after deleting 0:")
+    bst.delete(0)
+    print("Tree after deleting 2:")
+    bst.delete(2)
+    print("Tree after deleting 1:")
+    bst.delete(1)
+    assert bst.is_empty()
+
+
+def test_single_child_deletion() -> None:
+    assert False
+
+
+def test_double_children_deletion() -> None:
+    assert False
+
+
+def test_selected_deletion() -> None:
+    test_no_children_deletion()
+    test_single_child_deletion()
+    test_double_children_deletion()
+
+
+def test_deletion() -> None:
+    test_selected_deletion()
+    test_random_deletion()
 
 
 def test_operations() -> None:
