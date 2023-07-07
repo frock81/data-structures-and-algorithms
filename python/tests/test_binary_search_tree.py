@@ -39,7 +39,7 @@ def print_h1_delimiter() -> None:
 
 
 def print_h1(text: str) -> None:
-    print("\n")
+    print()
     print_h1_delimiter()
     print(f"{get_comment_prefix()}{text.upper()}")
     print_h1_delimiter()
@@ -64,7 +64,6 @@ def test_search(bst: BinarySearchTree,
         assert not bst.contains(excluded)
         print(f'Tree does not contain {excluded}')
     print('All not contains assertions passed.')
-    print("Search (contains) test passed!")
 
 
 def test_insertion(bst: BinarySearchTree, insertion_list: list[int]) -> None:
@@ -196,7 +195,7 @@ def test_insertion_wrapper() -> tuple[BinarySearchTree, list[int], list[int]]:
     print_h1('INSERTION TEST')
     insertion_list, excluded_list = get_inclusion_and_excluded_lists()
     test_insertion(bst=bst, insertion_list=insertion_list)
-    assert bst.count() == len(insertion_list)
+    print("Nodes inserted into the tree structure.\n")
     return bst, insertion_list, excluded_list
 
 
@@ -206,6 +205,7 @@ def test_traverse_wrapper(bst: BinarySearchTree) -> None:
     test_traverse(BinarySearchTree())
     print("\nNon empty BST:")
     test_traverse(bst)
+    print("Tree traversed.\n")
 
 
 def test_search_wrapper(bst: BinarySearchTree,
@@ -215,7 +215,38 @@ def test_search_wrapper(bst: BinarySearchTree,
     test_search(bst=bst,
                 included_list=list(set(included_list)),
                 excluded_list=excluded_list)
+    print("Search (contains) test passed.\n")
+
+
+def test_deletion_wrapper(bst, included_list) -> None:
     print_h1('DELETION TEST')
+    test_deletion(bst=bst, included_list=included_list)
+
+
+def test_sort(bst: BinarySearchTree) -> None:
+    sorted_list = bst.sort()
+    for index in range(len(sorted_list) - 1):
+        assert sorted_list[index] <= sorted_list[index + 1]
+        print(f"{sorted_list[index]} <= {sorted_list[index + 1]}")
+
+
+def test_sort_wrapper(bst: BinarySearchTree) -> None:
+    print_h1('SORT TEST')
+    test_sort(bst=bst)
+    print("Sort test passed.\n")
+
+
+def test_count(bst: BinarySearchTree, included_list: List[int]) -> None:
+    bst_count = bst.count()
+    # insertion_list may have duplicated values.
+    assert bst_count == len(list(set(included_list)))
+    print(f"BST count as expected: {bst_count}")
+
+
+def test_count_wrapper(bst: BinarySearchTree, included_list: List[int]) -> None:
+    print_h1('COUNT TEST')
+    test_count(bst=bst, included_list=included_list)
+    print("Count test passed.\n")
 
 
 def test_operations() -> None:
@@ -224,10 +255,12 @@ def test_operations() -> None:
     excluded_list: list[int]
     bst, insertion_list, excluded_list = test_insertion_wrapper()
     test_traverse_wrapper(bst=bst)
+    test_sort_wrapper(bst=bst)
+    test_count_wrapper(bst=bst, included_list=insertion_list)
     test_search_wrapper(bst=bst,
                         included_list=insertion_list,
                         excluded_list=excluded_list)
-    # test_deletion(bst=bst, included_list=insertion_list)
+    # test_deletion_wrapper(bst=bst, included_list=insertion_list)
 
 
 if __name__ == '__main__':

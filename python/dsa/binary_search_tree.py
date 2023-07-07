@@ -177,5 +177,14 @@ class BinarySearchTree:
             return
         return self._root_node.delete(value)
 
+
+    def sort(self) -> list[int]:
+        values = []
+        def cb_append_values(node: BinarySearchTreeNode):
+            values.append(node.get_value())
+        self.traverse(cb_append_values, order_prefix='in')
+        return values
+
+
     def count(self) -> int:
-        return 0
+        return len(self.sort())
