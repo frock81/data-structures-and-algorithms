@@ -187,4 +187,6 @@ class BinarySearchTree:
 
 
     def count(self) -> int:
+        if self.is_empty():
+            return 0
         return len(self.sort())

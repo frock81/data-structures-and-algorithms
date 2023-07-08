@@ -188,19 +188,33 @@ def test_no_children_deletion() -> None:
     bst.insert(1)
     bst.insert(0)
     bst.insert(2)
-    print("Tree before deletion:")
-    bst.traverse(print)
-    print("Tree after deleting 0:")
-    print("Tree after insertions:")
-    bst.traverse(print)
     assert bst.count() == 3
-    print("Tree after deleting 0:")
+    print("Selective after insertions:")
+    bst.traverse(print)
+
     bst.delete(0)
-    print("Tree after deleting 2:")
+    assert bst.count() == 2
+    assert bst.contains(1)
+    assert not bst.contains(0)
+    assert bst.contains(2)
+    print("Selective tree after deleting 0:")
+
     bst.delete(2)
-    print("Tree after deleting 1:")
+    assert bst.count() == 1
+    assert bst.contains(1)
+    assert not bst.contains(0)
+    assert not bst.contains(2)
+    print("Selective tree after deleting 2:")
+    bst.traverse(print)
+
     bst.delete(1)
+    assert bst.count() == 0
     assert bst.is_empty()
+    assert not bst.contains(1)
+    assert not bst.contains(0)
+    assert not bst.contains(2)
+    print("Selective tree after deleting 2:")
+    bst.traverse(print)
 
 
 def test_single_child_deletion() -> None:
