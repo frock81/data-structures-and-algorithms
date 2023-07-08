@@ -118,8 +118,31 @@ class BinarySearchTreeNode:
             return self._right_child.contains(search_value)
         return False
 
-    def delete(self, deletion_value: int) -> None:
-        pass
+    def search_children_for_removal(self, deletion_value: int) -> None:
+        if deletion_value < self._value and self._left_child is not None:
+            if self._left_child.get_value() == deletion_value:
+                self._remove_left_child()
+            else:
+                self._left_child.search_children_for_removal(deletion_value)
+            return
+        raise NotImplementedError()
+
+    def _remove_left_child(self):
+        children_count = self._get_left_child_children_count()
+        if children_count == 0:
+            self._left_child = None
+        elif children_count == 1:
+            raise NotImplementedError()
+        elif children_count == 2:
+            raise NotImplementedError()
+
+    def _get_left_child_children_count(self):
+        children_count = 0
+        if self._left_child.get_left_child() is not None:
+            children_count = children_count + 1
+        if self._left_child.get_right_child() is not None:
+            children_count = children_count + 1
+        return children_count
 
     def __repr__(self) -> str:
         return 'BinarySearchTreeNode()'
@@ -175,18 +198,22 @@ class BinarySearchTree:
     def delete(self, value: int) -> None:
         if self._root_node is None:
             return
-        return self._root_node.delete(value)
-
+        if self._root_node.get_value() == value:
+            self._delete_root_node()
+        else:
+            self._root_node.search_children_for_removal(value)
 
     def sort(self) -> list[int]:
-        values = []
+        values: list[int] = []
         def cb_append_values(node: BinarySearchTreeNode):
             values.append(node.get_value())
         self.traverse(cb_append_values, order_prefix='in')
         return values
 
-
     def count(self) -> int:
         if self.is_empty():
             return 0
         return len(self.sort())
+
+    def _delete_root_node() -> None:
+        raise NotImplementedError()

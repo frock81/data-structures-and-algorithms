@@ -38,12 +38,26 @@ def print_h1_delimiter() -> None:
     print(get_comment_prefix() + "=" * 70)
 
 
-def print_h1(text: str) -> None:
+def print_h2_delimiter() -> None:
+    print(get_comment_prefix() + "-" * 70)
+
+
+def format_h1_text(text: str) -> str:
+    return f"{get_comment_prefix()}{text.upper()}"
+
+
+def print_h1(text: str, level: int=1) -> None:
     print()
     print_h1_delimiter()
-    print(f"{get_comment_prefix()}{text.upper()}")
+    print(format_h1_text(text))
     print_h1_delimiter()
     print()
+
+
+def print_h2(text: str, h1_text: str) -> None:
+    print_h2_delimiter()
+    print(f"{format_h1_text(h1_text)} :: {text.capitalize()}")
+    print_h2_delimiter()
 
 
 def test_creation_and_initialization() -> None:
@@ -183,22 +197,33 @@ def test_count_wrapper(bst: BinarySearchTree, included_list: List[int]) -> None:
     print("Count test passed.\n")
 
 
-def test_no_children_deletion() -> None:
+def test_deletion_no_children_prepare() -> BinarySearchTree:
+    print_h2(h1_text="deletion", text="insertion")
     bst = BinarySearchTree()
     bst.insert(1)
     bst.insert(0)
     bst.insert(2)
     assert bst.count() == 3
-    print("Selective after insertions:")
+    print("Selective tree after insertions:")
     bst.traverse(print)
+    print()
+    return bst
 
+
+def test_deletion_no_children_left_child(bst):
+    print_h2(h1_text="deletion", text="No children on the left child")
     bst.delete(0)
     assert bst.count() == 2
     assert bst.contains(1)
     assert not bst.contains(0)
     assert bst.contains(2)
     print("Selective tree after deleting 0:")
+    bst.traverse(print)
+    print("Left with no children assertions test passed\n")
 
+
+def test_deletion_no_children_right_child(bst):
+    print_h2(h1_text="deletion", text="No children on the right child")
     bst.delete(2)
     assert bst.count() == 1
     assert bst.contains(1)
@@ -207,6 +232,8 @@ def test_no_children_deletion() -> None:
     print("Selective tree after deleting 2:")
     bst.traverse(print)
 
+def test_deletion_no_children_root_node(bst: BinarySearchTree) -> None:
+    print_h2(h1_text="deletion", text="root with no children")
     bst.delete(1)
     assert bst.count() == 0
     assert bst.is_empty()
@@ -217,18 +244,25 @@ def test_no_children_deletion() -> None:
     bst.traverse(print)
 
 
-def test_single_child_deletion() -> None:
+def test_deletion_no_children() -> None:
+    bst = test_deletion_no_children_prepare()
+    test_deletion_no_children_left_child(bst)
+    test_deletion_no_children_right_child(bst)
+    test_deletion_no_children_root_node(bst)
+
+
+def test_deletion_single_child() -> None:
     assert False
 
 
-def test_double_children_deletion() -> None:
+def test_deletion_double_children() -> None:
     assert False
 
 
 def test_selected_deletion() -> None:
-    test_no_children_deletion()
-    test_single_child_deletion()
-    test_double_children_deletion()
+    test_deletion_no_children()
+    test_deletion_single_child()
+    test_deletion_double_children()
 
 
 def test_random_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
