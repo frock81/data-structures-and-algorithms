@@ -57,13 +57,12 @@ class BinarySearchTreeNode:
         child = getattr(self, attribute_name)
         return child
 
-    def _set_child(self,
-                   child_position: Literal['left', 'right'],
-                   child: Optional['BinarySearchTreeNode']
-                  ) -> Optional['BinarySearchTreeNode']:
+    def set_child(self,
+                  child_position: Literal['left', 'right'],
+                  child: Optional['BinarySearchTreeNode']
+                 ) -> Optional['BinarySearchTreeNode']:
         attribute_name = f"_{child_position}_child"
         setattr(self, attribute_name, child)
-
 
     def insert(self, insert_node: 'BinarySearchTreeNode') -> None:
         insert_value = insert_node.get_value()
@@ -133,6 +132,19 @@ class BinarySearchTreeNode:
             return self._right_child.contains(search_value)
         return False
 
+    def get_children_count(self) -> int:
+        children_count = 0
+        if self._left_child is not None:
+            children_count = 1
+        if self._right_child is not None:
+            children_count= children_count + 1
+        return children_count
+
+    def get_unique_child(self) -> 'BinarySearchTreeNode':
+        if self._left_child is None:
+            return self._right_child
+        return self._left_child
+
     def search_children_for_removal(self, deletion_value: int) -> None:
         if deletion_value < self._value and self._left_child is not None:
             self._check_child_for_removal(deletion_value=deletion_value,
@@ -157,7 +169,7 @@ class BinarySearchTreeNode:
     def _remove_child_with_no_children(self,
                                        child_position: Literal['left', 'right']
                                       ) -> None:
-        self._set_child(child_position, None)
+        self.set_child(child_position, None)
 
     def _remove_child_with_single_children(
         self,
@@ -167,7 +179,7 @@ class BinarySearchTreeNode:
         new_child = old_child.get_left_child()
         if new_child is None:
             new_child = old_child.get_right_child()
-        self._set_child(child_position=child_position, child=new_child)
+        self.set_child(child_position=child_position, child=new_child)
 
     def _remove_child(self, child_position: Literal['left', 'right']) -> None:
         children_count = self._get_self_child_children_count(child_position)
@@ -261,4 +273,10 @@ class BinarySearchTree:
         return len(self.sort())
 
     def _delete_root_node(self) -> None:
-        self._root_node = None
+        children_count = self._root_node.get_children_count()
+        if children_count == 0:
+            self._root_node = None
+        if children_count == 1:
+            self._root_node = self._root_node.get_unique_child()
+        if children_count == 2:
+            raise NotImplementedError()
