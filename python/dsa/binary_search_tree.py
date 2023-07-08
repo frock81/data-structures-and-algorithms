@@ -140,7 +140,7 @@ class BinarySearchTreeNode:
             children_count= children_count + 1
         return children_count
 
-    def get_unique_child(self) -> 'BinarySearchTreeNode':
+    def get_single_child(self) -> 'BinarySearchTreeNode':
         if self._left_child is None:
             return self._right_child
         return self._left_child
@@ -277,6 +277,6 @@ class BinarySearchTree:
         if children_count == 0:
             self._root_node = None
         if children_count == 1:
-            self._root_node = self._root_node.get_unique_child()
+            self._root_node = self._root_node.get_single_child()
         if children_count == 2:
             raise NotImplementedError()

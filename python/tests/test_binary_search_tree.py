@@ -279,6 +279,15 @@ def test_deletion_single_child_left_prepare() -> Tuple[BinarySearchTree,
                                                        List[int]]:
     print_h2(h1_text="deletion", text="single child, left prepare/insertion")
     bst = BinarySearchTree()
+    '''
+        3    3    3    1
+       /    /    /
+      2    0    1
+     /      \
+    0        1
+     \
+      1
+    '''
     insertion_list = [3, 2, 0, 1]
     removal_list = [2, 0, 3]
     for value in insertion_list:
@@ -352,9 +361,17 @@ def test_deletion_single_child_right_prepare() -> Tuple[BinarySearchTree,
                                                        List[int]]:
     print_h2(h1_text="deletion", text="single child, right, prepare/insertion")
     bst = BinarySearchTree()
-    raise NotImplementedError()
-    insertion_list = [3, 2, 0, 1]
-    removal_list = [2, 0, 3]
+    '''
+    0    0    0    2
+     \    \    \
+      1    1    2
+       \    \
+        3    2
+        /
+       2
+    '''
+    insertion_list = [0, 1, 3, 2]
+    removal_list = [3, 1, 0]
     for value in insertion_list:
         bst.insert(value)
     print("Selective tree after insertions:")
