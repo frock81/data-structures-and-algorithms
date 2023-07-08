@@ -251,4 +251,4 @@ class BinarySearchTree:
         return len(self.sort())
 
     def _delete_root_node(self) -> None:
-        raise NotImplementedError()
+        self._root_node = None

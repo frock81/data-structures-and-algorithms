@@ -203,46 +203,48 @@ def test_deletion_no_children_prepare() -> BinarySearchTree:
     bst.insert(1)
     bst.insert(0)
     bst.insert(2)
-    assert bst.count() == 3
     print("Selective tree after insertions:")
     bst.traverse(print)
-    print()
+    assert bst.count() == 3
+    print("No children prepare assertions test passed\n")
     return bst
 
 
 def test_deletion_no_children_left_child(bst: BinarySearchTree):
     print_h2(h1_text="deletion", text="No children on the left child")
     bst.delete(0)
+    print("Selective tree after deleting 0:")
+    bst.traverse(print)
     assert bst.count() == 2
     assert bst.contains(1)
     assert not bst.contains(0)
     assert bst.contains(2)
-    print("Selective tree after deleting 0:")
-    bst.traverse(print)
     print("Left with no children assertions test passed\n")
 
 
 def test_deletion_no_children_right_child(bst):
     print_h2(h1_text="deletion", text="No children on the right child")
     bst.delete(2)
+    print("Selective tree after deleting 2:")
+    bst.traverse(print)
     assert bst.count() == 1
     assert bst.contains(1)
     assert not bst.contains(0)
     assert not bst.contains(2)
-    print("Selective tree after deleting 2:")
-    bst.traverse(print)
     print("Right with no children assertions test passed\n")
+
 
 def test_deletion_no_children_root_node(bst: BinarySearchTree) -> None:
     print_h2(h1_text="deletion", text="root with no children")
     bst.delete(1)
+    print("Selective tree after deleting 1:")
+    bst.traverse(print)
     assert bst.count() == 0
     assert bst.is_empty()
     assert not bst.contains(1)
     assert not bst.contains(0)
     assert not bst.contains(2)
-    print("Selective tree after deleting 2:")
-    bst.traverse(print)
+    print("Root with no children assertions test passed\n")
 
 
 def test_deletion_no_children() -> None:
