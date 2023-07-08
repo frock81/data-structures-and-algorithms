@@ -47,7 +47,7 @@ def format_h1_text(text: str) -> str:
     return f"{get_comment_prefix()}{text.upper()}"
 
 
-def print_h1(text: str, level: int=1) -> None:
+def print_h1(text: str) -> None:
     print()
     print_h1_delimiter()
     print(format_h1_text(text))
@@ -55,10 +55,26 @@ def print_h1(text: str, level: int=1) -> None:
     print()
 
 
+def format_h2(text: str) -> str:
+    return f" :: {text.capitalize()}"
+
+
 def print_h2(text: str, h1_text: str) -> None:
     print_h2_delimiter()
-    print(f"{format_h1_text(h1_text)} :: {text.capitalize()}")
+    print(f"{format_h1_text(h1_text)}{format_h2(text)}")
     print_h2_delimiter()
+    print()
+
+
+def print_h3_delimiter() -> None:
+    print("*" * 50)
+
+
+def print_h3(text: str, h1_text: str, h2_text: str) -> None:
+    print_h3_delimiter()
+    print(f"* {h1_text} :: {h2_text} :: {text} ")
+    print_h3_delimiter()
+    print()
 
 
 def test_creation_and_initialization() -> None:
@@ -198,89 +214,13 @@ def test_count_wrapper(bst: BinarySearchTree, included_list: List[int]) -> None:
     print("Count test passed.\n")
 
 
-def test_deletion_no_children_prepare() -> BinarySearchTree:
-    print_h2(h1_text="deletion", text="insertion")
-    bst = BinarySearchTree()
-    bst.insert(1)
-    bst.insert(0)
-    bst.insert(2)
-    print("Selective tree after insertions:")
-    bst.traverse(print)
-    assert bst.count() == 3
-    print("No children prepare assertions test passed\n")
-    return bst
-
-
-def test_deletion_no_children_left(bst: BinarySearchTree,
-                                   removal_list: List[int],
-                                   remaining_list: List[int],
-                                   removed_list: List[int]) -> None:
-    print_h2(h1_text="deletion", text="no children, left")
-    real_test_deletion(
-        bst=bst,
-        removal_list=removal_list,
-        remaining_list=remaining_list,
-        removed_list=removed_list,
-        msg="no children, left assertions test passed\n")
-
-
-def test_deletion_no_children_right(bst: BinarySearchTree,
-                                    removal_list: List[int],
-                                    remaining_list: List[int],
-                                    removed_list: List[int]) -> None:
-    print_h2(h1_text="deletion", text="no children, right")
-    real_test_deletion(
-        bst=bst,
-        removal_list=removal_list,
-        remaining_list=remaining_list,
-        removed_list=removed_list,
-        msg="no children, right assertions test passed\n")
-
-
-def test_deletion_no_children_root(bst: BinarySearchTree,
-                                   removal_list: List[int],
-                                   remaining_list: List[int],
-                                   removed_list: List[int]) -> None:
-    print_h2(h1_text="deletion", text="no children, root")
-    real_test_deletion(
-        bst=bst,
-        removal_list=removal_list,
-        remaining_list=remaining_list,
-        removed_list=removed_list,
-        msg="Single child, root assertions test passed\n")
-
-
-def test_deletion_no_children() -> None:
-    '''
-      1    1    1    vazio
-     / \    \
-    0   2    2
-    '''
-    insertion_list = [1, 0, 2]
-    removal_list = [0, 2, 1]
-    removed_list = []
-    print_h2(h1_text="deletion", text="single child, left prepare/insertion")
-    bst = test_deletion_prepare(insertion_list)
-    print("Single child prepare assertions test passed\n")
-    test_deletion_no_children_left(bst,
-                                   remaining_list=insertion_list,
-                                   removal_list=removal_list,
-                                   removed_list=removed_list)
-    test_deletion_no_children_right(bst,
-                                    remaining_list=insertion_list,
-                                    removal_list=removal_list,
-                                    removed_list=removed_list)
-    test_deletion_no_children_root(bst,
-                                   remaining_list=insertion_list,
-                                   removal_list=removal_list,
-                                   removed_list=removed_list)
 
 
 def real_test_deletion(bst: BinarySearchTree,
                        removal_list: List[int],
                        remaining_list: List[int],
                        removed_list: List[int],
-                       msg: str) -> None:
+                       msg: str = '') -> None:
     deletion_value = removal_list.pop(0)
     remaining_list.remove(deletion_value)
     removed_list.append(deletion_value)
@@ -292,7 +232,7 @@ def real_test_deletion(bst: BinarySearchTree,
         assert bst.contains(value)
     for value in removed_list:
         assert not bst.contains(value)
-    print(f"{msg}")
+    # print(f"{msg}")
 
 
 def test_deletion_prepare(insertion_list) -> BinarySearchTree:
@@ -303,6 +243,58 @@ def test_deletion_prepare(insertion_list) -> BinarySearchTree:
     bst.traverse(print)
     assert bst.count() == len(insertion_list)
     return bst
+
+
+def test_deletion_no_children() -> None:
+    '''
+      1    1    1    vazio
+     / \    \
+    0   2    2
+    '''
+    insertion_list = [1, 0, 2]
+    removal_list = [0, 2, 1]
+    removed_list = []
+
+    h2_text = "no children"
+    print_h2(h1_text="deletion", text=h2_text)
+
+    h3_text = "prepare/insertions"
+    print_h3(h1_text="deletion",
+             h2_text=h2_text,
+             text=h3_text)
+    bst = test_deletion_prepare(insertion_list)
+    print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
+          .capitalize())
+
+    h3_text = 'left'
+    print_h3(h1_text="deletion",
+             h2_text=h2_text,
+             text=h3_text)
+    real_test_deletion(bst,
+                       remaining_list=insertion_list,
+                       removal_list=removal_list,
+                       removed_list=removed_list)
+    print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
+          .capitalize())
+
+    h3_text = 'right'
+    real_test_deletion(bst,
+                       remaining_list=insertion_list,
+                       removal_list=removal_list,
+                       removed_list=removed_list)
+    print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
+          .capitalize())
+
+    h3_text = "root"
+    print_h3(h1_text="deletion",
+             h2_text=h2_text,
+             text=h3_text)
+    real_test_deletion(bst,
+                       remaining_list=insertion_list,
+                       removal_list=removal_list,
+                       removed_list=removed_list)
+    print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
+          .capitalize())
 
 
 def test_deletion_single_child_left_left(bst: BinarySearchTree,
