@@ -145,9 +145,9 @@ class BinarySearchTreeNode:
         raise NotImplementedError()
 
     def _check_child_for_removal(self,
-                                deletion_value: int,
-                                child_position: Literal['left', 'right']
-                               ) -> None:
+                                 deletion_value: int,
+                                 child_position: Literal['left', 'right']
+                                ) -> None:
         self_child = self.get_child(child_position)
         if self_child.get_value() == deletion_value:
             self._remove_child(child_position)
@@ -159,12 +159,22 @@ class BinarySearchTreeNode:
                                       ) -> None:
         self._set_child(child_position, None)
 
+    def _remove_child_with_single_children(
+        self,
+        child_position: Literal['left', 'right']
+    ) -> None:
+        old_child = self.get_child(child_position)
+        new_child = old_child.get_left_child()
+        if new_child is None:
+            new_child = old_child.get_right_child()
+        self._set_child(child_position=child_position, child=new_child)
+
     def _remove_child(self, child_position: Literal['left', 'right']) -> None:
         children_count = self._get_self_child_children_count(child_position)
         if children_count == 0:
             self._remove_child_with_no_children(child_position)
         elif children_count == 1:
-            raise NotImplementedError()
+            self._remove_child_with_single_children(child_position)
         elif children_count == 2:
             raise NotImplementedError()
 

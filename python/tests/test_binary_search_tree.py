@@ -258,7 +258,7 @@ def test_deletion_no_children() -> None:
 def test_deletion_single_child_left_prepare() -> Tuple[BinarySearchTree,
                                                        List[int],
                                                        List[int]]:
-    print_h2(h1_text="deletion", text=" single child insertion")
+    print_h2(h1_text="deletion", text="single child insertion")
     bst = BinarySearchTree()
     insertion_list = [3, 2, 0, 1]
     removal_list = [2, 0, 3]
@@ -287,7 +287,7 @@ def real_test_deletion(bst: BinarySearchTree,
         assert bst.contains(value)
     for value in removed_list:
         assert not bst.contains(value)
-    print("{msg}")
+    print(f"{msg}")
 
 
 def test_deletion_single_child_left_left(bst: BinarySearchTree,
@@ -303,16 +303,30 @@ def test_deletion_single_child_left_left(bst: BinarySearchTree,
         msg="Single child, left/left assertions test passed\n")
 
 
-def test_deletion_single_child_left_right(bst: BinarySearchTree) -> None:
+def test_deletion_single_child_left_right(bst: BinarySearchTree,
+                                          removal_list: List[int],
+                                          remaining_list: List[int],
+                                          removed_list: List[int]) -> None:
     print_h2(h1_text="deletion", text="Single child, left/right")
-    raise NotImplementedError()
-    print("Single child, left/right assertions test passed\n")
+    real_test_deletion(
+        bst=bst,
+        removal_list=removal_list,
+        remaining_list=remaining_list,
+        removed_list=removed_list,
+        msg="Single child, left/right assertions test passed\n")
 
 
-def test_deletion_single_child_left_root(bst: BinarySearchTree) -> None:
+def test_deletion_single_child_left_root(bst: BinarySearchTree,
+                                         removal_list: List[int],
+                                         remaining_list: List[int],
+                                         removed_list: List[int]) -> None:
     print_h2(h1_text="deletion", text="Single child, left/root")
-    raise NotImplementedError()
-    print("Single child, left/root assertions test passed\n")
+    real_test_deletion(
+        bst=bst,
+        removal_list=removal_list,
+        remaining_list=remaining_list,
+        removed_list=removed_list,
+        msg="Single child, left/root assertions test passed\n")
 
 
 def test_deletion_single_child_left() -> None:
