@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+from typing import Tuple
 import random
 import os
 import sys
@@ -254,8 +255,91 @@ def test_deletion_no_children() -> None:
     test_deletion_no_children_root_node(bst)
 
 
-def test_deletion_single_child() -> None:
+def test_deletion_single_child_left_prepare() -> Tuple[BinarySearchTree,
+                                                       List[int],
+                                                       List[int]]:
+    print_h2(h1_text="deletion", text=" single child insertion")
+    bst = BinarySearchTree()
+    insertion_list = [3, 2, 0, 1]
+    removal_list = [2, 0, 3]
+    for value in insertion_list:
+        bst.insert(value)
+    print("Selective tree after insertions:")
+    bst.traverse(print)
+    assert bst.count() == len(insertion_list)
+    print("Single child prepare assertions test passed\n")
+    return bst, insertion_list, removal_list
+
+
+def real_test_deletion(bst: BinarySearchTree,
+                       removal_list: List[int],
+                       remaining_list: List[int],
+                       removed_list: List[int],
+                       msg: str) -> None:
+    deletion_value = removal_list.pop()
+    remaining_list.remove(deletion_value)
+    removed_list.append(deletion_value)
+    bst.delete(deletion_value)
+    print("Selective tree after deleting {deletion_value}:")
+    bst.traverse(print)
+    assert bst.count() == len(remaining_list)
+    for value in remaining_list:
+        assert bst.contains(value)
+    for value in removed_list:
+        assert not bst.contains(value)
+    print("{msg}")
+
+
+def test_deletion_single_child_left_left(bst: BinarySearchTree,
+                                         removal_list: List[int],
+                                         remaining_list: List[int],
+                                         removed_list: List[int]) -> None:
+    print_h2(h1_text="deletion", text="Single child, left/left")
+    real_test_deletion(
+        bst=bst,
+        removal_list=removal_list,
+        remaining_list=remaining_list,
+        removed_list=removed_list,
+        msg="Single child, left/left assertions test passed\n")
+
+
+def test_deletion_single_child_left_right(bst: BinarySearchTree) -> None:
+    print_h2(h1_text="deletion", text="Single child, left/right")
+    raise NotImplementedError()
+    print("Single child, left/right assertions test passed\n")
+
+
+def test_deletion_single_child_left_root(bst: BinarySearchTree) -> None:
+    print_h2(h1_text="deletion", text="Single child, left/root")
+    raise NotImplementedError()
+    print("Single child, left/root assertions test passed\n")
+
+
+def test_deletion_single_child_left() -> None:
+    bst, remaining_list, removal_list = \
+        test_deletion_single_child_left_prepare()
+    removed_list = []
+    test_deletion_single_child_left_left(bst=bst,
+                                         remaining_list=remaining_list,
+                                         removal_list=removal_list,
+                                         removed_list=removed_list)
+    test_deletion_single_child_left_right(bst=bst,
+                                          remaining_list=remaining_list,
+                                          removal_list=removal_list,
+                                          removed_list=removed_list)
+    test_deletion_single_child_left_root(bst=bst,
+                                         remaining_list=remaining_list,
+                                         removal_list=removal_list,
+                                         removed_list=removed_list)
+
+
+def test_deletion_single_child_right() -> None:
     assert False
+
+
+def test_deletion_single_child() -> None:
+    test_deletion_single_child_left()
+    test_deletion_single_child_right()
 
 
 def test_deletion_double_children() -> None:
