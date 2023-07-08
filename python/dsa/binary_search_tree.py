@@ -133,7 +133,18 @@ class BinarySearchTreeNode:
             return self._right_child.contains(search_value)
         return False
 
-    def check_child_for_removal(self,
+    def search_children_for_removal(self, deletion_value: int) -> None:
+        if deletion_value < self._value and self._left_child is not None:
+            self._check_child_for_removal(deletion_value=deletion_value,
+                                         child_position='left')
+            return
+        if self._value < deletion_value and self._right_child is not None:
+            self._check_child_for_removal(deletion_value=deletion_value,
+                                         child_position='right')
+            return
+        raise NotImplementedError()
+
+    def _check_child_for_removal(self,
                                 deletion_value: int,
                                 child_position: Literal['left', 'right']
                                ) -> None:
@@ -142,28 +153,6 @@ class BinarySearchTreeNode:
             self._remove_child(child_position)
         else:
             self_child.search_children_for_removal(deletion_value)
-
-    def search_children_for_removal(self, deletion_value: int) -> None:
-        if deletion_value < self._value and self._left_child is not None:
-            if self._left_child.get_value() == deletion_value:
-                self._remove_left_child()
-            else:
-                self._left_child.search_children_for_removal(deletion_value)
-            return
-        if self._value < deletion_value and self._right_child is not None:
-            self.check_child_for_removal(deletion_value=deletion_value,
-                                         child_position='right')
-            return
-        raise NotImplementedError()
-
-    def _remove_left_child(self):
-        children_count = self._get_left_child_children_count()
-        if children_count == 0:
-            self._left_child = None
-        elif children_count == 1:
-            raise NotImplementedError()
-        elif children_count == 2:
-            raise NotImplementedError()
 
     def _remove_child_with_no_children(self,
                                        child_position: Literal['left', 'right']
@@ -178,14 +167,6 @@ class BinarySearchTreeNode:
             raise NotImplementedError()
         elif children_count == 2:
             raise NotImplementedError()
-
-    def _get_left_child_children_count(self):
-        children_count = 0
-        if self._left_child.get_left_child() is not None:
-            children_count = children_count + 1
-        if self._left_child.get_right_child() is not None:
-            children_count = children_count + 1
-        return children_count
 
     def _get_self_child_children_count(self,
                                        child_position: Literal['left', 'right']
@@ -269,5 +250,5 @@ class BinarySearchTree:
             return 0
         return len(self.sort())
 
-    def _delete_root_node() -> None:
+    def _delete_root_node(self) -> None:
         raise NotImplementedError()

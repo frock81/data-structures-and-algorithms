@@ -210,7 +210,7 @@ def test_deletion_no_children_prepare() -> BinarySearchTree:
     return bst
 
 
-def test_deletion_no_children_left_child(bst):
+def test_deletion_no_children_left_child(bst: BinarySearchTree):
     print_h2(h1_text="deletion", text="No children on the left child")
     bst.delete(0)
     assert bst.count() == 2
