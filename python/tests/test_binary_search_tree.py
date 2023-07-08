@@ -211,48 +211,69 @@ def test_deletion_no_children_prepare() -> BinarySearchTree:
     return bst
 
 
-def test_deletion_no_children_left_child(bst: BinarySearchTree):
-    print_h2(h1_text="deletion", text="No children on the left child")
-    bst.delete(0)
-    print("Selective tree after deleting 0:")
-    bst.traverse(print)
-    assert bst.count() == 2
-    assert bst.contains(1)
-    assert not bst.contains(0)
-    assert bst.contains(2)
-    print("Left with no children assertions test passed\n")
+def test_deletion_no_children_left(bst: BinarySearchTree,
+                                   removal_list: List[int],
+                                   remaining_list: List[int],
+                                   removed_list: List[int]) -> None:
+    print_h2(h1_text="deletion", text="no children, left")
+    real_test_deletion(
+        bst=bst,
+        removal_list=removal_list,
+        remaining_list=remaining_list,
+        removed_list=removed_list,
+        msg="no children, left assertions test passed\n")
 
 
-def test_deletion_no_children_right_child(bst):
-    print_h2(h1_text="deletion", text="No children on the right child")
-    bst.delete(2)
-    print("Selective tree after deleting 2:")
-    bst.traverse(print)
-    assert bst.count() == 1
-    assert bst.contains(1)
-    assert not bst.contains(0)
-    assert not bst.contains(2)
-    print("Right with no children assertions test passed\n")
+def test_deletion_no_children_right(bst: BinarySearchTree,
+                                    removal_list: List[int],
+                                    remaining_list: List[int],
+                                    removed_list: List[int]) -> None:
+    print_h2(h1_text="deletion", text="no children, right")
+    real_test_deletion(
+        bst=bst,
+        removal_list=removal_list,
+        remaining_list=remaining_list,
+        removed_list=removed_list,
+        msg="no children, right assertions test passed\n")
 
 
-def test_deletion_no_children_root_node(bst: BinarySearchTree) -> None:
-    print_h2(h1_text="deletion", text="root with no children")
-    bst.delete(1)
-    print("Selective tree after deleting 1:")
-    bst.traverse(print)
-    assert bst.count() == 0
-    assert bst.is_empty()
-    assert not bst.contains(1)
-    assert not bst.contains(0)
-    assert not bst.contains(2)
-    print("Root with no children assertions test passed\n")
+def test_deletion_no_children_root(bst: BinarySearchTree,
+                                   removal_list: List[int],
+                                   remaining_list: List[int],
+                                   removed_list: List[int]) -> None:
+    print_h2(h1_text="deletion", text="no children, root")
+    real_test_deletion(
+        bst=bst,
+        removal_list=removal_list,
+        remaining_list=remaining_list,
+        removed_list=removed_list,
+        msg="Single child, root assertions test passed\n")
 
 
 def test_deletion_no_children() -> None:
-    bst = test_deletion_no_children_prepare()
-    test_deletion_no_children_left_child(bst)
-    test_deletion_no_children_right_child(bst)
-    test_deletion_no_children_root_node(bst)
+    '''
+      1    1    1    vazio
+     / \    \
+    0   2    2
+    '''
+    insertion_list = [1, 0, 2]
+    removal_list = [0, 2, 1]
+    removed_list = []
+    print_h2(h1_text="deletion", text="single child, left prepare/insertion")
+    bst = test_deletion_prepare(insertion_list)
+    print("Single child prepare assertions test passed\n")
+    test_deletion_no_children_left(bst,
+                                   remaining_list=insertion_list,
+                                   removal_list=removal_list,
+                                   removed_list=removed_list)
+    test_deletion_no_children_right(bst,
+                                    remaining_list=insertion_list,
+                                    removal_list=removal_list,
+                                    removed_list=removed_list)
+    test_deletion_no_children_root(bst,
+                                   remaining_list=insertion_list,
+                                   removal_list=removal_list,
+                                   removed_list=removed_list)
 
 
 def real_test_deletion(bst: BinarySearchTree,
