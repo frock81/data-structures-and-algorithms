@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import Any, Callable
+from typing import Callable, Literal, Optional
 
 
 class BinarySearchTreeNode:
@@ -49,6 +49,21 @@ class BinarySearchTreeNode:
         if self._right_child is not None:
             return self._right_child.get_value()
         return None
+
+    def get_child(self,
+                  child_position: Literal['left', 'right']
+                 ) -> 'BinarySearchTreeNode':
+        attribute_name = f"_{child_position}_child"
+        child = getattr(self, attribute_name)
+        return child
+
+    def _set_child(self,
+                   child_position: Literal['left', 'right'],
+                   child: Optional['BinarySearchTreeNode']
+                  ) -> Optional['BinarySearchTreeNode']:
+        attribute_name = f"_{child_position}_child"
+        setattr(self, attribute_name, child)
+
 
     def insert(self, insert_node: 'BinarySearchTreeNode') -> None:
         insert_value = insert_node.get_value()
@@ -118,12 +133,26 @@ class BinarySearchTreeNode:
             return self._right_child.contains(search_value)
         return False
 
+    def check_child_for_removal(self,
+                                deletion_value: int,
+                                child_position: Literal['left', 'right']
+                               ) -> None:
+        self_child = self.get_child(child_position)
+        if self_child.get_value() == deletion_value:
+            self._remove_child(child_position)
+        else:
+            self_child.search_children_for_removal(deletion_value)
+
     def search_children_for_removal(self, deletion_value: int) -> None:
         if deletion_value < self._value and self._left_child is not None:
             if self._left_child.get_value() == deletion_value:
                 self._remove_left_child()
             else:
                 self._left_child.search_children_for_removal(deletion_value)
+            return
+        if self._value < deletion_value and self._right_child is not None:
+            self.check_child_for_removal(deletion_value=deletion_value,
+                                         child_position='right')
             return
         raise NotImplementedError()
 
@@ -136,6 +165,20 @@ class BinarySearchTreeNode:
         elif children_count == 2:
             raise NotImplementedError()
 
+    def _remove_child_with_no_children(self,
+                                       child_position: Literal['left', 'right']
+                                      ) -> None:
+        self._set_child(child_position, None)
+
+    def _remove_child(self, child_position: Literal['left', 'right']) -> None:
+        children_count = self._get_self_child_children_count(child_position)
+        if children_count == 0:
+            self._remove_child_with_no_children(child_position)
+        elif children_count == 1:
+            raise NotImplementedError()
+        elif children_count == 2:
+            raise NotImplementedError()
+
     def _get_left_child_children_count(self):
         children_count = 0
         if self._left_child.get_left_child() is not None:
@@ -143,6 +186,17 @@ class BinarySearchTreeNode:
         if self._left_child.get_right_child() is not None:
             children_count = children_count + 1
         return children_count
+
+    def _get_self_child_children_count(self,
+                                       child_position: Literal['left', 'right']
+                                      ) -> int:
+        self_child_children_count = 0
+        self_child = self.get_child(child_position)
+        if self_child.get_left_child() is not None:
+            self_child_children_count = self_child_children_count + 1
+        if self_child.get_right_child() is not None:
+            self_child_children_count = self_child_children_count + 1
+        return self_child_children_count
 
     def __repr__(self) -> str:
         return 'BinarySearchTreeNode()'

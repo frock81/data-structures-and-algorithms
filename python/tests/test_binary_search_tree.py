@@ -231,6 +231,7 @@ def test_deletion_no_children_right_child(bst):
     assert not bst.contains(2)
     print("Selective tree after deleting 2:")
     bst.traverse(print)
+    print("Right with no children assertions test passed\n")
 
 def test_deletion_no_children_root_node(bst: BinarySearchTree) -> None:
     print_h2(h1_text="deletion", text="root with no children")
