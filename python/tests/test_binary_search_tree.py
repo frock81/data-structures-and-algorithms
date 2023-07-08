@@ -276,11 +276,11 @@ def real_test_deletion(bst: BinarySearchTree,
                        remaining_list: List[int],
                        removed_list: List[int],
                        msg: str) -> None:
-    deletion_value = removal_list.pop()
+    deletion_value = removal_list.pop(0)
     remaining_list.remove(deletion_value)
     removed_list.append(deletion_value)
     bst.delete(deletion_value)
-    print("Selective tree after deleting {deletion_value}:")
+    print(f"Selective tree after deleting {deletion_value}:")
     bst.traverse(print)
     assert bst.count() == len(remaining_list)
     for value in remaining_list:
