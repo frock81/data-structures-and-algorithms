@@ -129,26 +129,58 @@ def get_keeped_values(included_list: list[int],
              if included_list[x] not in deletion_list])
 
 
-def test_random_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
-    print("Tree before deletion:")
-    bst.traverse(print)
-    print()
-    for_deletion_values = get_values_to_be_deleted(
-        included_list)
-    print("Valores a serem excluídos da árvore")
-    print(f"{for_deletion_values}\n")
-    for value_to_be_deleted in for_deletion_values:
-        print(f"Deleting value {value_to_be_deleted}")
-        bst.delete(value=value_to_be_deleted)
-        assert not bst.contains(value_to_be_deleted)
-    print("\nTree after deletion:")
-    bst.traverse(print)
-    print()
-    keeped_values = get_keeped_values(included_list=included_list,
-                                      deletion_list=for_deletion_values)
-    for keeped_value in keeped_values:
-        assert bst.contains(keeped_value)
-    print("All delete assertions passed.")
+def test_insertion_wrapper() -> tuple[BinarySearchTree, list[int], list[int]]:
+    bst = BinarySearchTree()
+    print_h1('INSERTION TEST')
+    insertion_list, excluded_list = get_inclusion_and_excluded_lists()
+    test_insertion(bst=bst, insertion_list=insertion_list)
+    print("Nodes inserted into the tree structure.\n")
+    return bst, insertion_list, excluded_list
+
+
+def test_traverse_wrapper(bst: BinarySearchTree) -> None:
+    print_h1('TRAVERSAL TEST')
+    print("Empty BST:")
+    test_traverse(BinarySearchTree())
+    print("\nNon empty BST:")
+    test_traverse(bst)
+    print("Tree traversed.\n")
+
+
+def test_search_wrapper(bst: BinarySearchTree,
+                        included_list: list[int],
+                        excluded_list: list[int]) -> None:
+    print_h1('SEARCH TEST')
+    test_search(bst=bst,
+                included_list=list(set(included_list)),
+                excluded_list=excluded_list)
+    print("Search (contains) test passed.\n")
+
+
+def test_sort(bst: BinarySearchTree) -> None:
+    sorted_list = bst.sort()
+    for index in range(len(sorted_list) - 1):
+        assert sorted_list[index] <= sorted_list[index + 1]
+        print(f"{sorted_list[index]} <= {sorted_list[index + 1]}")
+
+
+def test_sort_wrapper(bst: BinarySearchTree) -> None:
+    print_h1('SORT TEST')
+    test_sort(bst=bst)
+    print("Sort test passed.\n")
+
+
+def test_count(bst: BinarySearchTree, included_list: List[int]) -> None:
+    bst_count = bst.count()
+    # insertion_list may have duplicated values.
+    assert bst_count == len(list(set(included_list)))
+    print(f"BST count as expected: {bst_count}")
+
+
+def test_count_wrapper(bst: BinarySearchTree, included_list: List[int]) -> None:
+    print_h1('COUNT TEST')
+    test_count(bst=bst, included_list=included_list)
+    print("Count test passed.\n")
 
 
 def test_no_children_deletion() -> None:
@@ -185,68 +217,36 @@ def test_selected_deletion() -> None:
     test_double_children_deletion()
 
 
-def test_deletion() -> None:
+def test_random_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
+    print("Tree before deletion:")
+    bst.traverse(print)
+    print()
+    for_deletion_values = get_values_to_be_deleted(
+        included_list)
+    print("Valores a serem excluídos da árvore")
+    print(f"{for_deletion_values}\n")
+    for value_to_be_deleted in for_deletion_values:
+        print(f"Deleting value {value_to_be_deleted}")
+        bst.delete(value=value_to_be_deleted)
+        assert not bst.contains(value_to_be_deleted)
+    print("\nTree after deletion:")
+    bst.traverse(print)
+    print()
+    keeped_values = get_keeped_values(included_list=included_list,
+                                      deletion_list=for_deletion_values)
+    for keeped_value in keeped_values:
+        assert bst.contains(keeped_value)
+    print("All delete assertions passed.")
+
+
+def test_deletion(bst: BinarySearchTree, included_list: List[int]) -> None:
     test_selected_deletion()
-    test_random_deletion()
-
-
-def test_insertion_wrapper() -> tuple[BinarySearchTree, list[int], list[int]]:
-    bst = BinarySearchTree()
-    print_h1('INSERTION TEST')
-    insertion_list, excluded_list = get_inclusion_and_excluded_lists()
-    test_insertion(bst=bst, insertion_list=insertion_list)
-    print("Nodes inserted into the tree structure.\n")
-    return bst, insertion_list, excluded_list
-
-
-def test_traverse_wrapper(bst: BinarySearchTree) -> None:
-    print_h1('TRAVERSAL TEST')
-    print("Empty BST:")
-    test_traverse(BinarySearchTree())
-    print("\nNon empty BST:")
-    test_traverse(bst)
-    print("Tree traversed.\n")
-
-
-def test_search_wrapper(bst: BinarySearchTree,
-                        included_list: list[int],
-                        excluded_list: list[int]) -> None:
-    print_h1('SEARCH TEST')
-    test_search(bst=bst,
-                included_list=list(set(included_list)),
-                excluded_list=excluded_list)
-    print("Search (contains) test passed.\n")
+    test_random_deletion(bst, included_list)
 
 
 def test_deletion_wrapper(bst, included_list) -> None:
     print_h1('DELETION TEST')
     test_deletion(bst=bst, included_list=included_list)
-
-
-def test_sort(bst: BinarySearchTree) -> None:
-    sorted_list = bst.sort()
-    for index in range(len(sorted_list) - 1):
-        assert sorted_list[index] <= sorted_list[index + 1]
-        print(f"{sorted_list[index]} <= {sorted_list[index + 1]}")
-
-
-def test_sort_wrapper(bst: BinarySearchTree) -> None:
-    print_h1('SORT TEST')
-    test_sort(bst=bst)
-    print("Sort test passed.\n")
-
-
-def test_count(bst: BinarySearchTree, included_list: List[int]) -> None:
-    bst_count = bst.count()
-    # insertion_list may have duplicated values.
-    assert bst_count == len(list(set(included_list)))
-    print(f"BST count as expected: {bst_count}")
-
-
-def test_count_wrapper(bst: BinarySearchTree, included_list: List[int]) -> None:
-    print_h1('COUNT TEST')
-    test_count(bst=bst, included_list=included_list)
-    print("Count test passed.\n")
 
 
 def test_operations() -> None:
@@ -260,7 +260,7 @@ def test_operations() -> None:
     test_search_wrapper(bst=bst,
                         included_list=insertion_list,
                         excluded_list=excluded_list)
-    # test_deletion_wrapper(bst=bst, included_list=insertion_list)
+    test_deletion_wrapper(bst=bst, included_list=insertion_list)
 
 
 if __name__ == '__main__':
