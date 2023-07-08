@@ -195,10 +195,19 @@ def test_sort(bst: BinarySearchTree) -> None:
         print(f"{sorted_list[index]} <= {sorted_list[index + 1]}")
 
 
+def test_sort_reverse(bst: BinarySearchTree) -> None:
+    sorted_list = bst.sort(reverse=True)
+    for index in range(len(sorted_list) - 1):
+        assert sorted_list[index] >= sorted_list[index + 1]
+        print(f"{sorted_list[index]} >= {sorted_list[index + 1]}")
+
+
 def test_sort_wrapper(bst: BinarySearchTree) -> None:
     print_h1('SORT TEST')
     test_sort(bst=bst)
     print("Sort test passed.\n")
+    test_sort_reverse(bst=bst)
+    print("Reversed Sort test passed.\n")
 
 
 def test_count(bst: BinarySearchTree, included_list: List[int]) -> None:
@@ -409,14 +418,14 @@ def test_deletion_single_child() -> None:
     test_deletion_single_child_right()
 
 
-def test_deletion_double_children() -> None:
+def test_deletion_couple_children() -> None:
     assert False
 
 
 def test_selected_deletion() -> None:
     test_deletion_no_children()
     test_deletion_single_child()
-    test_deletion_double_children()
+    test_deletion_couple_children()
 
 
 def test_random_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:

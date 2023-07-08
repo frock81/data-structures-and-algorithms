@@ -260,10 +260,13 @@ class BinarySearchTree:
         else:
             self._root_node.search_children_for_removal(value)
 
-    def sort(self) -> list[int]:
+    def sort(self, reverse: bool = False) -> list[int]:
         values: list[int] = []
         def cb_append_values(node: BinarySearchTreeNode):
             values.append(node.get_value())
+        if reverse:
+            self.traverse(cb_append_values, order_prefix='in', reverse=True)
+            return values
         self.traverse(cb_append_values, order_prefix='in')
         return values
 
