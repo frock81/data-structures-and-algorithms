@@ -239,6 +239,10 @@ def real_test_deletion(bst: BinarySearchTree,
         assert bst.contains(value)
     for value in removed_list:
         assert not bst.contains(value)
+    test_sort(bst)
+    print("Sort test passed")
+    test_sort_reverse(bst)
+    print("Reversed sort test passed")
 
 
 def test_deletion_prepare(insertion_list) -> BinarySearchTree:
