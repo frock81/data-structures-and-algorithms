@@ -168,6 +168,8 @@ class BinarySearchTreeNode:
                                  child_position: Literal['left', 'right']
                                 ) -> None:
         self_child = self.get_child(child_position)
+        if self_child is None:
+            return
         if self_child.get_value() == deletion_value:
             self._remove_child(child_position)
         else:

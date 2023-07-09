@@ -14,8 +14,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
 from dsa.binary_search_tree import BinarySearchTree, BinarySearchTreeNode
 from typing import List
 
-SEED = 10
-SAMPLES = 25
+SEED = 50
+SAMPLES = 100
 DELETION_RATE = 0.5
 
 
@@ -503,20 +503,30 @@ def test_selected_deletion() -> None:
 
 
 def test_random_deletion(bst: BinarySearchTree, included_list: list[int]) -> None:
-    print("Tree before deletion:")
-    bst.traverse(print)
-    print()
-    for_deletion_values = get_values_to_be_deleted(
-        included_list)
+    h2_text = 'random'
+    print_h2(h1_text='deletion', text=h2_text)
+    for_deletion_values = get_values_to_be_deleted(included_list)
     print("Valores a serem excluídos da árvore")
     print(f"{for_deletion_values}\n")
     for value_to_be_deleted in for_deletion_values:
-        print(f"Deleting value {value_to_be_deleted}")
+        h3_text = value_to_be_deleted
+        print_h3(h1_text='deletion',
+                 h2_text=h2_text,
+                 text=f"value to delete: {h3_text}")
+        print("Tree before deletion:")
+        bst.traverse(print)
+        print(f"\nDeleting value {value_to_be_deleted}")
         bst.delete(value=value_to_be_deleted)
+        print("\nTesting sort: normal)")
+        test_sort(bst)
+        print("\nTesting sort: reverse)")
+        test_sort_reverse(bst)
+        print("\nAsserting not contains")
         assert not bst.contains(value_to_be_deleted)
-    print("\nTree after deletion:")
-    bst.traverse(print)
-    print()
+        print(f"\nDeletion of {value_to_be_deleted} assertions passed")
+        print("\nTree after deletion:")
+        bst.traverse(print)
+        print()
     keeped_values = get_keeped_values(included_list=included_list,
                                       deletion_list=for_deletion_values)
     for keeped_value in keeped_values:
