@@ -142,8 +142,9 @@ class BinarySearchTreeNode:
             self._check_child_for_removal(deletion_value=deletion_value,
                                          child_position='right')
             return
-        # By design we chose the max descendent from the left branch to replace
-        # a node marked for removal. This would be different otherwise.
+        # By design we chose the max descendent from the left branch to
+        # replace a node with a couple of children marked for removal.
+        # This would be different otherwise.
         self._check_child_for_removal(deletion_value=deletion_value,
                                       child_position='left')
 
