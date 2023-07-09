@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import Callable, Literal, Optional, Union
+from typing import Callable, Literal, Optional
 
 
 class BinarySearchTreeNode:
