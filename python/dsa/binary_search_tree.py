@@ -19,6 +19,9 @@ class BinarySearchTreeNode:
         if right_value is not None:
             self._right_child = BinarySearchTreeNode(value=right_value)
 
+    def set_value(self, value: int) -> None:
+        self._value = value
+
     def get_value(self) -> int:
         return self._value
 
@@ -151,15 +154,14 @@ class BinarySearchTreeNode:
         return self._left_child
 
     def search_children_for_removal(self, deletion_value: int) -> None:
-        if deletion_value < self._value and self._left_child is not None:
-            self._check_child_for_removal(deletion_value=deletion_value,
-                                         child_position='left')
-            return
         if self._value < deletion_value and self._right_child is not None:
             self._check_child_for_removal(deletion_value=deletion_value,
                                          child_position='right')
             return
-        raise NotImplementedError()
+        # By design we chose the max descendent from the left branch to replace
+        # a node marked for removal. This would be different otherwise.
+        self._check_child_for_removal(deletion_value=deletion_value,
+                                      child_position='left')
 
     def _check_child_for_removal(self,
                                  deletion_value: int,
@@ -170,10 +172,6 @@ class BinarySearchTreeNode:
             self._remove_child(child_position)
         else:
             self_child.search_children_for_removal(deletion_value)
-
-    def _find_max_on_the_left(self, bst_node: 'BinarySearchTreeNode'):
-        raise NotImplementedError()
-
     def _remove_child_with_no_children(self,
                                        child_position: Literal['left', 'right']
                                       ) -> None:
@@ -196,9 +194,10 @@ class BinarySearchTreeNode:
         elif children_count == 1:
             self._remove_child_with_single_children(child_position)
         elif children_count == 2:
-            left_max = self._find_max_on_the_left(
-                self.get_child(child_position))
-            raise NotImplementedError()
+            left_max = (self.get_child(child_position).get_left_child()
+                        .find_max())
+            self.get_child(child_position).set_value(left_max)
+            self.get_child(child_position).search_children_for_removal(left_max)
 
     def _get_self_child_children_count(self,
                                        child_position: Literal['left', 'right']
@@ -294,7 +293,11 @@ class BinarySearchTree:
         children_count = self._root_node.get_children_count()
         if children_count == 0:
             self._root_node = None
+            return
         if children_count == 1:
             self._root_node = self._root_node.get_single_child()
+            return
         if children_count == 2:
             raise NotImplementedError()
+        raise Exception("This point should never be reached: a root node with "
+                        "more than two children")
