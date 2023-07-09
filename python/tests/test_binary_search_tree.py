@@ -257,9 +257,9 @@ def test_deletion_prepare(insertion_list) -> BinarySearchTree:
 
 def test_deletion_no_children() -> None:
     '''
-      1    1    1    vazio
-     / \    \
-    0   2    2
+    |   1   | 1   | 1 | vazio |
+    |  / \  |  \  |   |       |
+    | 0   2 |   2 |   |       |
     '''
     insertion_list = [1, 0, 2]
     removal_list = [0, 2, 1]
@@ -309,13 +309,13 @@ def test_deletion_no_children() -> None:
 
 def test_deletion_single_child_left() -> None:
     '''
-        3    3    3    1
-       /    /    /
-      2    0    1
-     /      \
-    0        1
-     \
-      1
+    |     3 |   3 |   3 | 1 |
+    |    /  |  /  |  /  |   |
+    |   2   | 0   | 1   |   |
+    |  /    |  \  |     |   |
+    | 0     |   1 |     |   |
+    |  \    |     |     |   |
+    |   1   |     |     |   |
     '''
     insertion_list = [3, 2, 0, 1]
     removal_list = [2, 0, 3]
@@ -365,13 +365,13 @@ def test_deletion_single_child_left() -> None:
 
 def test_deletion_single_child_right() -> None:
     '''
-    0    0    0    2
-     \    \    \
-      1    1    2
-       \    \
-        3    2
-        /
-       2
+    | 0     | 0     | 0   | 2 |
+    |  \    |  \    |  \  |   |
+    |   1   |   1   |   2 |   |
+    |    \  |    \  |     |   |
+    |     3 |     2 |     |   |
+    |     / |       |     |   |
+    |    2  |       |     |   |
     '''
     insertion_list = [0, 1, 3, 2]
     removal_list = [3, 1, 0]
@@ -445,7 +445,19 @@ def test_deletion_couple_children() -> None:
     bst = test_deletion_prepare(insertion_list)
     print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
           .capitalize())
-    assert False
+
+    h3_text = 'left'
+    print_h3(h1_text="deletion",
+             h2_text=h2_text,
+             text=h3_text)
+    real_test_deletion(bst,
+                       remaining_list=insertion_list,
+                       removal_list=removal_list,
+                       removed_list=removed_list)
+    print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
+          .capitalize())
+
+    raise NotImplementedError()
 
 
 def test_selected_deletion() -> None:
