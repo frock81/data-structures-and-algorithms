@@ -483,7 +483,17 @@ def test_deletion_couple_children() -> None:
     print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
           .capitalize())
 
-    raise NotImplementedError()
+
+    h3_text = 'root'
+    print_h3(h1_text="deletion",
+             h2_text=h2_text,
+             text=h3_text)
+    real_test_deletion(bst,
+                       remaining_list=insertion_list,
+                       removal_list=removal_list,
+                       removed_list=removed_list)
+    print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
+          .capitalize())
 
 
 def test_selected_deletion() -> None:

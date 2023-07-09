@@ -298,6 +298,9 @@ class BinarySearchTree:
             self._root_node = self._root_node.get_single_child()
             return
         if children_count == 2:
-            raise NotImplementedError()
+            left_max = self._root_node.get_left_child().find_max()
+            self._root_node.set_value(left_max)
+            self._root_node.search_children_for_removal(left_max)
+            return
         raise Exception("This point should never be reached: a root node with "
                         "more than two children")
