@@ -14,8 +14,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
 from dsa.binary_search_tree import BinarySearchTree, BinarySearchTreeNode
 from typing import List
 
-SEED = 50
-SAMPLES = 100
+SEED = 500
+SAMPLES = 1000
 DELETION_RATE = 0.5
 
 

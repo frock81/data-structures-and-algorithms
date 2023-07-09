@@ -31,9 +31,6 @@ class BinarySearchTreeNode:
     def get_left_child(self) -> 'BinarySearchTreeNode':
         return self._left_child
 
-    def set_left_child_by_value(self, value: int) -> None:
-        self._left_child = BinarySearchTreeNode(value=value)
-
     def get_left_child_value(self) -> int|None:
         if self._left_child is not None:
             return self._left_child.get_value()
