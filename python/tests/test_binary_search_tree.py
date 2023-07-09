@@ -249,7 +249,7 @@ def test_deletion_prepare(insertion_list) -> BinarySearchTree:
     bst = BinarySearchTree()
     for value in insertion_list:
         bst.insert(value)
-    print("Selective tree after insertions:")
+    print("Selective tree after insertions (preorder):")
     bst.traverse(print)
     assert bst.count() == len(insertion_list)
     return bst
@@ -423,6 +423,28 @@ def test_deletion_single_child() -> None:
 
 
 def test_deletion_couple_children() -> None:
+    '''
+          5       |     5       |     5       |     4       |
+         / \      |    / \      |    / \      |    / \      |
+        4   6     |   4   6     |   4   6     |   1   6     |
+       /     \    |  /     \    |  /     \    |    \   \    |
+      2       8   | 1       8   | 1       7   |     3   7   |
+     / \     / \  |  \     / \  |  \       \  |          \  |
+    1   3   7   9 |   3   7   9 |   3       9 |           9 |
+    '''
+    insertion_list = [5, 4, 2, 1, 3, 6, 8, 7, 9]
+    removal_list = [2, 8, 5]
+    removed_list = []
+    h2_text = "couple"
+    print_h2(h1_text="deletion", text=h2_text)
+
+    h3_text = "prepare/insertions"
+    print_h3(h1_text="deletion",
+             h2_text=h2_text,
+             text=h3_text)
+    bst = test_deletion_prepare(insertion_list)
+    print(f"deletion, {h2_text}, {h3_text} assertions tests passed\n"
+          .capitalize())
     assert False
 
 
