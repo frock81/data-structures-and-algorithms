@@ -210,6 +210,19 @@ def test_sort_wrapper(bst: BinarySearchTree) -> None:
     print("Reversed Sort test passed.\n")
 
 
+def real_test_find_max(bst: BinarySearchTree,
+                       included_list: List[int]) -> None:
+    assert bst.find_max == max(included_list)
+
+
+def test_find_max_wrapper(bst: BinarySearchTree,
+                          included_list: List[int]) -> None:
+    h1_text = 'find max'
+    print_h1(f'{h1_text} test')
+    real_test_find_max(bst, included_list)
+    print(f"{h1_text} tests passed".capitalize())
+
+
 def test_count(bst: BinarySearchTree, included_list: List[int]) -> None:
     bst_count = bst.count()
     # insertion_list may have duplicated values.
@@ -505,6 +518,7 @@ def test_operations() -> None:
     bst, insertion_list, excluded_list = test_insertion_wrapper()
     test_traverse_wrapper(bst=bst)
     test_sort_wrapper(bst=bst)
+    test_find_max_wrapper(bst=bst, included_list=insertion_list)
     test_count_wrapper(bst=bst, included_list=insertion_list)
     test_search_wrapper(bst=bst,
                         included_list=insertion_list,

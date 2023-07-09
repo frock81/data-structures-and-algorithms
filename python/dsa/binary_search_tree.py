@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import Callable, Literal, Optional
+from typing import Callable, Literal, Optional, Union
 
 
 class BinarySearchTreeNode:
@@ -63,6 +63,9 @@ class BinarySearchTreeNode:
                  ) -> Optional['BinarySearchTreeNode']:
         attribute_name = f"_{child_position}_child"
         setattr(self, attribute_name, child)
+
+    def find_max(self):
+        raise NotImplementedError()
 
     def insert(self, insert_node: 'BinarySearchTreeNode') -> None:
         insert_value = insert_node.get_value()
@@ -166,6 +169,9 @@ class BinarySearchTreeNode:
         else:
             self_child.search_children_for_removal(deletion_value)
 
+    def _find_max_on_the_left(self, bst_node: 'BinarySearchTreeNode'):
+        raise NotImplementedError()
+
     def _remove_child_with_no_children(self,
                                        child_position: Literal['left', 'right']
                                       ) -> None:
@@ -188,6 +194,8 @@ class BinarySearchTreeNode:
         elif children_count == 1:
             self._remove_child_with_single_children(child_position)
         elif children_count == 2:
+            left_max = self._find_max_on_the_left(
+                self.get_child(child_position))
             raise NotImplementedError()
 
     def _get_self_child_children_count(self,
@@ -274,6 +282,9 @@ class BinarySearchTree:
         if self.is_empty():
             return 0
         return len(self.sort())
+
+    def find_max(self) -> Optional[int]:
+        raise NotImplementedError()
 
     def _delete_root_node(self) -> None:
         children_count = self._root_node.get_children_count()
