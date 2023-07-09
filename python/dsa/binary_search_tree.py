@@ -31,31 +31,11 @@ class BinarySearchTreeNode:
     def get_left_child(self) -> 'BinarySearchTreeNode':
         return self._left_child
 
-    def get_left_child_value(self) -> int|None:
-        if self._left_child is not None:
-            return self._left_child.get_value()
-        return None
-
     def set_right_child(self, bst_node: 'BinarySearchTreeNode') -> None:
         self._right_child = bst_node
 
     def get_right_child(self) -> 'BinarySearchTreeNode':
         return self._right_child
-
-    def set_right_child_by_value(self, value: int) -> None:
-        self._right_child = BinarySearchTreeNode(value=value)
-
-    def get_right_child_value(self) -> int|None:
-        if self._right_child is not None:
-            return self._right_child.get_value()
-        return None
-
-    def get_child(self,
-                  child_position: Literal['left', 'right']
-                 ) -> 'BinarySearchTreeNode':
-        attribute_name = f"_{child_position}_child"
-        child = getattr(self, attribute_name)
-        return child
 
     def set_child(self,
                   child_position: Literal['left', 'right'],
@@ -63,6 +43,13 @@ class BinarySearchTreeNode:
                  ) -> Optional['BinarySearchTreeNode']:
         attribute_name = f"_{child_position}_child"
         setattr(self, attribute_name, child)
+
+    def get_child(self,
+                  child_position: Literal['left', 'right']
+                 ) -> 'BinarySearchTreeNode':
+        attribute_name = f"_{child_position}_child"
+        child = getattr(self, attribute_name)
+        return child
 
     def find_max(self):
         if self._right_child is not None:
