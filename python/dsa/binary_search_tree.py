@@ -65,7 +65,9 @@ class BinarySearchTreeNode:
         setattr(self, attribute_name, child)
 
     def find_max(self):
-        raise NotImplementedError()
+        if self._right_child is not None:
+            return self._right_child.find_max()
+        return self._value
 
     def insert(self, insert_node: 'BinarySearchTreeNode') -> None:
         insert_value = insert_node.get_value()
@@ -284,7 +286,9 @@ class BinarySearchTree:
         return len(self.sort())
 
     def find_max(self) -> Optional[int]:
-        raise NotImplementedError()
+        if self._root_node is None:
+            return None
+        return self._root_node.find_max()
 
     def _delete_root_node(self) -> None:
         children_count = self._root_node.get_children_count()

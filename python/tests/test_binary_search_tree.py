@@ -212,7 +212,9 @@ def test_sort_wrapper(bst: BinarySearchTree) -> None:
 
 def real_test_find_max(bst: BinarySearchTree,
                        included_list: List[int]) -> None:
-    assert bst.find_max == max(included_list)
+    bst.traverse(print)
+    print(included_list)
+    assert bst.find_max() == max(included_list)
 
 
 def test_find_max_wrapper(bst: BinarySearchTree,
