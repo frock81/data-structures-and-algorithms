@@ -21,6 +21,7 @@ SIZE = 25
 FROM = 0
 TO = 100
 
+
 def prepare() -> List:
     """Return a random list to be sorted"""
     random.seed(SEED)
@@ -31,9 +32,16 @@ def prepare() -> List:
     pprint(to_be_sorted_list)
     return to_be_sorted_list
 
+
+def test_sort(some_list: List) -> None:
+    for index in range(len(some_list) - 1):
+        assert some_list[index] <= some_list[index + 1]
+        print(f"{some_list[index]} <= {some_list[index + 1]}")
+
+
 def test_insertion_sort(to_be_sorted_list: List):
     sorted_list = insertion_sort(to_be_sorted_list)
-    assert False
+    test_sort(sorted_list)
 
 
 if __name__ == '__main__':
