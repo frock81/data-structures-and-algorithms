@@ -17,4 +17,12 @@ def insertion_sort(sorting_list: List) -> List:
 
 
 def selection_sort(sorting_list: List) -> List:
+    for i in range(len(sorting_list)):
+        min_index = i
+        key = sorting_list[i]
+        for j in range(i + 1, len(sorting_list)):
+            if sorting_list[j] < sorting_list[min_index]:
+                min_index = j
+        sorting_list[i] = sorting_list[min_index]
+        sorting_list[min_index] = key
     return sorting_list
