@@ -25,9 +25,9 @@ TO = 100
 def print_heading(text, level):
     if level == 1:
         formatted_text = (
-            f"\n{'#' + '=' * 72}"
-            f"\n#  {text.upper()}\n"
-            f"{'#' + '=' * 72}\n")
+            f"\n{'# ' + '=' * 72}"
+            f"\n# {text.upper()}\n"
+            f"{'# ' + '=' * 72}\n")
     elif level == 2:
         formatted_text = f"\n--- {text.capitalize()} ---"
     elif level == 3:
@@ -55,21 +55,13 @@ def test_sort(some_list: List) -> None:
         print(f"{some_list[index]} <= {some_list[index + 1]}")
 
 
-def test_insertion_sort(to_be_sorted_list: List):
-    print_heading('insertion sort', 1)
-    test_sort(insertion_sort(to_be_sorted_list))
-
-
-def test_selection_sort(to_be_sorted):
-    print_heading('selection sort', 1)
-    test_sort(selection_sort(to_be_sorted))
-
-
 if __name__ == '__main__':
     to_be_sorted = prepare()
-    test_insertion_sort(list(to_be_sorted))
-    # Test selection sort
-    test_selection_sort(list(to_be_sorted))
+    print_heading('insertion sort', 1)
+    test_sort(insertion_sort(to_be_sorted, SIZE))
+
+    print_heading('selection sort', 1)
+    test_sort(selection_sort(to_be_sorted, SIZE))
     # Test bubble sort
     # Test merge sort
     # Test heap
