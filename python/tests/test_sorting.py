@@ -22,8 +22,24 @@ FROM = 0
 TO = 100
 
 
+def print_heading(text, level):
+    if level == 1:
+        formatted_text = (
+            f"\n{'#' + '=' * 72}"
+            f"\n#  {text.upper()}\n"
+            f"{'#' + '=' * 72}\n")
+    elif level == 2:
+        formatted_text = f"\n--- {text.capitalize()} ---"
+    elif level == 3:
+        formatted_text = f"\n> {text.title()} <"
+    else:
+        formatted_text = text
+    print(formatted_text)
+
+
 def prepare() -> List:
     """Return a random list to be sorted"""
+    print_heading('prepare', 1)
     random.seed(SEED)
     to_be_sorted_list = []
     for i in range(SIZE):
@@ -40,6 +56,7 @@ def test_sort(some_list: List) -> None:
 
 
 def test_insertion_sort(to_be_sorted_list: List):
+    print_heading('insertion sort', 1)
     sorted_list = insertion_sort(to_be_sorted_list)
     test_sort(sorted_list)
 
