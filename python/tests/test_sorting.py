@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import Tuple
+from typing import List
 import random
 import os
 import sys
+from pprint import pprint
 
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
@@ -15,15 +16,32 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
 from dsa.sorting import insertion_sort
 
 
-def test_insertion_sort():
+SEED = 12
+SIZE = 25
+FROM = 0
+TO = 100
+
+def prepare() -> List:
+    """Return a random list to be sorted"""
+    random.seed(SEED)
+    to_be_sorted_list = []
+    for i in range(SIZE):
+        to_be_sorted_list.append(random.randint(FROM, TO))
+    print('List to be sorted')
+    pprint(to_be_sorted_list)
+    return to_be_sorted_list
+
+def test_insertion_sort(to_be_sorted_list: List):
+    sorted_list = insertion_sort(to_be_sorted_list)
     assert False
 
 
 if __name__ == '__main__':
+    to_be_sorted = prepare()
     # Test bubble sort
     # Test selection sort
     # Test insertion sort
-    test_insertion_sort()
+    test_insertion_sort(to_be_sorted)
     # Test merge sort
     # Test quick sort
     # Test heap
