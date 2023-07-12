@@ -12,8 +12,8 @@ from pprint import pprint
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
 
 
-# from dsa.sorting import bubble_sort, selection_sort, insertion_sort, merge_sort, quick_sort, heap_sort
-from dsa.sorting import insertion_sort
+from dsa.sorting import (insertion_sort,
+                         selection_sort)
 
 
 SEED = 12
@@ -57,17 +57,23 @@ def test_sort(some_list: List) -> None:
 
 def test_insertion_sort(to_be_sorted_list: List):
     print_heading('insertion sort', 1)
-    sorted_list = insertion_sort(to_be_sorted_list)
-    test_sort(sorted_list)
+    test_sort(insertion_sort(to_be_sorted_list))
+
+
+def test_selection_sort(to_be_sorted):
+    print_heading('selection sort', 1)
+    test_sort(selection_sort(to_be_sorted))
 
 
 if __name__ == '__main__':
     to_be_sorted = prepare()
-    # Test bubble sort
+    test_insertion_sort(list(to_be_sorted))
     # Test selection sort
-    # Test insertion sort
-    test_insertion_sort(to_be_sorted)
+    test_selection_sort(list(to_be_sorted))
+    # Test bubble sort
     # Test merge sort
-    # Test quick sort
     # Test heap
+    # Test quick sort
+    # Test counting sort
     # Test radix
+    # Test bucket sort

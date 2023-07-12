@@ -14,3 +14,7 @@ def insertion_sort(sorting_list: List) -> List:
             j = j - 1
         sorting_list[j+1] = key
     return sorting_list
+
+
+def selection_sort(sorting_list: List) -> List:
+    return sorting_list
