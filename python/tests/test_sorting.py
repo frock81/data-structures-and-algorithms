@@ -9,32 +9,17 @@ import sys
 from pprint import pprint
 
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
-
-
+sys.path.append(f"{os.path.dirname(os.path.abspath(__file__))}{os.sep}..")
 from dsa.sorting import (insertion_sort,
-                         selection_sort)
+                         selection_sort,
+                         bubble_sort)
+from utils.printing import print_heading
 
 
 SEED = 12
 SIZE = 25
 FROM = 0
 TO = 100
-
-
-def print_heading(text, level):
-    if level == 1:
-        formatted_text = (
-            f"\n{'# ' + '=' * 72}"
-            f"\n# {text.upper()}\n"
-            f"{'# ' + '=' * 72}\n")
-    elif level == 2:
-        formatted_text = f"\n--- {text.capitalize()} ---"
-    elif level == 3:
-        formatted_text = f"\n> {text.title()} <"
-    else:
-        formatted_text = text
-    print(formatted_text)
 
 
 def prepare() -> List:
@@ -57,17 +42,18 @@ def test_sort(some_list: List) -> None:
 
 if __name__ == '__main__':
     to_be_sorted = prepare()
-    print_heading('insertion sort', 1)
-    test_sort(insertion_sort(to_be_sorted, SIZE))
-
-    print_heading('selection sort', 1)
-    test_sort(selection_sort(to_be_sorted, SIZE))
-    # Test bubble sort
-    # Test merge sort
-    # Test heap
-    # Test quick sort
-    # Test counting sort
-    # Test radix
-    # Test bucket sort
-
-
+    algorithms = [
+        'insertion',
+        'selection',
+        'bubble',
+        # 'merge',
+        # 'heap',
+        # 'quick',
+        # 'counting',
+        # 'radix',
+        # 'bucket'
+    ]
+    for algo in algorithms:
+        function_name = f'{algo}_sort'
+        print_heading(function_name, 1)
+        test_sort(globals()[function_name](list(to_be_sorted), SIZE))
