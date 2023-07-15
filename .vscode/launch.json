@@ -4,13 +4,15 @@
     // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "Python: Módulo",
+            "name": "Python: Arquivo Atual",
             "type": "python",
             "request": "launch",
-            "module": "python.tests.test_sorting",
-            "justMyCode": true
+            "cwd": "${workspaceFolder}/python",
+            "program": "${workspaceFolder}/python/tests/test_sorting.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["merge"]
         }
     ]
 }

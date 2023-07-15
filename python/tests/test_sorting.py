@@ -37,7 +37,13 @@ def test_sort(some_list: List) -> None:
 def call_test(sort_algorithm: str, to_be_sorted: List) -> None:
     print_heading(sort_algorithm, 1)
     sorting_module = getattr(dsa.sorting, f'{sort_algorithm}_sort')
-    test_sort(sorting_module(list(to_be_sorted), SIZE))
+    if sort_algorithm == 'merge':
+        sorted, _ = sorting_module(list(to_be_sorted), SIZE)
+    else:
+        sorted = sorting_module(list(to_be_sorted), SIZE)
+    print_heading('Sorted list', 3)
+    print(sorted)
+    test_sort(sorted)
 
 
 if __name__ == '__main__':

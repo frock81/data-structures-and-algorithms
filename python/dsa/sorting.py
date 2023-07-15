@@ -3,7 +3,7 @@
 
 
 from utils.printing import print_heading
-from typing import List
+from typing import List, Optional
 
 
 def insertion_sort(sorting_list: List[int], size: int) -> List:
@@ -64,27 +64,55 @@ def bubble_sort_left(sorting_list: List[int], size: int) -> List:
     return sorting_list
 
 
-def merge_sort(sorting_list: List[int],
+def merge_sort(sorting_list: Optional[List[int]],
                size: int) -> List:
     print_heading(f'Até aqui', 3)
     print(f'sorting_list: {sorting_list}')
     print(f'size: {size}')
-    # print(f'start: {start}')
-    # if end is None:
-    #     end = size - 1
-    # print(f'end: {end}')
-    left = None
-    right = None
-    if size != 1:
-        # half = (start + end) // 2
-        half = size // 2
-        print(f'half: {half}')
-        left = sorting_list[0:half]
-        print(f'left: {left}')
-        right = sorting_list[half:size]
-        print(f'right: {right}')
-        merge_sort(sorting_list=left, size=half)
-        merge_sort(sorting_list=right, size=size-half)
-
-
-    return sorting_list
+    sorted_left = None
+    sorted_right = None
+    if sorting_list is None:
+        return [], 0
+    if size == 1:
+        return sorting_list, 1
+    half = size // 2
+    print(f'half: {half}')
+    left = sorting_list[0:half]
+    print(f'left: {left}')
+    right = sorting_list[half:size]
+    print(f'right: {right}')
+    sorted_left, sorted_left_size = merge_sort(sorting_list=left, size=half)
+    print(f"sorted left: {sorted_left}")
+    sorted_right, sorted_right_size = merge_sort(sorting_list=right, size=size - half)
+    print(f"sorted right: {sorted_right}")
+    merged = []
+    merged_size = 0
+    while True:
+        if sorted_left_size == 0 and sorted_right_size == 0:
+            break
+        if sorted_left_size == 0 and sorted_right_size != 0:
+            merged.append(sorted_right.pop(0))
+            merged_size = merged_size + 1
+            sorted_right_size = sorted_right_size - 1
+            if sorted_right_size == 0:
+                break
+            continue
+        if sorted_left_size != 0 and sorted_right_size == 0:
+            merged.append(sorted_left.pop(0))
+            merged_size = merged_size + 1
+            sorted_left_size = sorted_left_size - 1
+            if sorted_left_size == 0:
+                break
+            continue
+        # <= for stability?
+        if sorted_left[0] <= sorted_right[0]:
+            merged.append(sorted_left[0])
+            merged_size = merged_size + 1
+            sorted_left.pop(0)
+            sorted_left_size = sorted_left_size - 1
+            continue
+        merged.append(sorted_right[0])
+        merged_size = merged_size + 1
+        sorted_right.pop(0)
+        sorted_right_size = sorted_right_size - 1
+    return list(merged), merged_size
