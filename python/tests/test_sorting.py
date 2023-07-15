@@ -2,15 +2,11 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import List
-import random
 from pprint import pprint
-
-
-from dsa.sorting import (insertion_sort,
-                         selection_sort,
-                         bubble_sort)
+from typing import List
 from utils.printing import print_heading
+import dsa.sorting
+import random
 
 
 SEED = 12
@@ -43,7 +39,7 @@ if __name__ == '__main__':
         'insertion',
         'selection',
         'bubble',
-        # 'merge',
+        'merge',
         # 'heap',
         # 'quick',
         # 'counting',
@@ -53,4 +49,5 @@ if __name__ == '__main__':
     for algo in algorithms:
         function_name = f'{algo}_sort'
         print_heading(function_name, 1)
-        test_sort(globals()[function_name](list(to_be_sorted), SIZE))
+        sorting_module = getattr(dsa.sorting, function_name)
+        test_sort(sorting_module(list(to_be_sorted), SIZE))

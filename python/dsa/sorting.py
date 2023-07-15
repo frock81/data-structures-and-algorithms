@@ -48,6 +48,7 @@ def bubble_sort_right(sorting_list: List[int], size: int) -> List:
                 sorting_list[j-1] = temp
     return sorting_list
 
+
 def bubble_sort_left(sorting_list: List[int], size: int) -> List:
     temp = None
     for i in range(size-1):
@@ -61,3 +62,6 @@ def bubble_sort_left(sorting_list: List[int], size: int) -> List:
                 sorting_list[j+1] = temp
     return sorting_list
 
+
+def merge_sort(sorting_list: List[int], size: int) -> List:
+    return sorting_list
