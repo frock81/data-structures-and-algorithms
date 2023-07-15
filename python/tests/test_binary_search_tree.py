@@ -4,12 +4,6 @@
 
 from typing import Tuple
 import random
-import os
-import sys
-
-
-# DEPRECATED: using PYTHONPATH in .envrc
-# sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
 
 
 from dsa.binary_search_tree import BinarySearchTree, BinarySearchTreeNode
