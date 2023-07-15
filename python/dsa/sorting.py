@@ -84,18 +84,18 @@ def merge_sort(sorting_list: Optional[List[int]],
         # <= for stability (i guess)
         if left[0] <= right[0]:
             merged.append(left.pop(0))
-            merged_size = merged_size + 1
-            left_size = left_size - 1
+            merged_size += 1
+            left_size -= 1
             continue
         merged.append(right.pop(0))
-        merged_size = merged_size + 1
-        right_size = right_size - 1
+        merged_size += 1
+        right_size -= 1
     while left_size > 0:
         merged.append(left.pop(0))
-        merged_size = merged_size + 1
-        left_size = left_size - 1
+        merged_size += 1
+        left_size -= 1
     while right_size > 0:
         merged.append(right.pop(0))
-        merged_size = merged_size + 1
-        right_size = right_size - 1
+        merged_size += 1
+        right_size -= 1
     return merged
