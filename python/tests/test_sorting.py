@@ -11,7 +11,7 @@ import sys
 
 
 SEED = 12
-SIZE = 25
+SIZE = 250
 FROM = 0
 TO = 100
 
