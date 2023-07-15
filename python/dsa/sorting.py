@@ -74,10 +74,8 @@ def merge_sort(sorting_list: Optional[List[int]],
     right_size = size - half
     left = sorting_list[:half]
     right = sorting_list[half:]
-    left = merge_sort(sorting_list=left,
-                      size=left_size)
-    right = merge_sort(sorting_list=right,
-                       size=right_size)
+    left = merge_sort(sorting_list=left, size=left_size)
+    right = merge_sort(sorting_list=right, size=right_size)
     merged = []
     merged_size = 0
     while left_size > 0 and right_size > 0:
