@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+from utils.printing import print_heading
 from typing import List
 
 
@@ -63,6 +64,27 @@ def bubble_sort_left(sorting_list: List[int], size: int) -> List:
     return sorting_list
 
 
-def merge_sort(sorting_list: List[int], size: int) -> List:
+def merge_sort(sorting_list: List[int],
+               size: int) -> List:
+    print_heading(f'Até aqui', 3)
+    print(f'sorting_list: {sorting_list}')
     print(f'size: {size}')
+    # print(f'start: {start}')
+    # if end is None:
+    #     end = size - 1
+    # print(f'end: {end}')
+    left = None
+    right = None
+    if size != 1:
+        # half = (start + end) // 2
+        half = size // 2
+        print(f'half: {half}')
+        left = sorting_list[0:half]
+        print(f'left: {left}')
+        right = sorting_list[half:size]
+        print(f'right: {right}')
+        merge_sort(sorting_list=left, size=half)
+        merge_sort(sorting_list=right, size=size-half)
+
+
     return sorting_list
