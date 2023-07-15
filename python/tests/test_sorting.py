@@ -7,6 +7,7 @@ from typing import List
 from utils.printing import print_heading
 import dsa.sorting
 import random
+import sys
 
 
 SEED = 12
@@ -23,7 +24,7 @@ def prepare() -> List:
     for i in range(SIZE):
         to_be_sorted_list.append(random.randint(FROM, TO))
     print('List to be sorted')
-    pprint(to_be_sorted_list)
+    print(to_be_sorted_list)
     return to_be_sorted_list
 
 
@@ -33,9 +34,14 @@ def test_sort(some_list: List) -> None:
         print(f"{some_list[index]} <= {some_list[index + 1]}")
 
 
+def call_test(sort_algorithm: str, to_be_sorted: List) -> None:
+    print_heading(sort_algorithm, 1)
+    sorting_module = getattr(dsa.sorting, f'{sort_algorithm}_sort')
+    test_sort(sorting_module(list(to_be_sorted), SIZE))
+
+
 if __name__ == '__main__':
-    to_be_sorted = prepare()
-    algorithms = [
+    implemented_algorithms = [
         'insertion',
         'selection',
         'bubble',
@@ -46,8 +52,15 @@ if __name__ == '__main__':
         # 'radix',
         # 'bucket'
     ]
-    for algo in algorithms:
-        function_name = f'{algo}_sort'
-        print_heading(function_name, 1)
-        sorting_module = getattr(dsa.sorting, function_name)
-        test_sort(sorting_module(list(to_be_sorted), SIZE))
+    sort_algorithm = None
+    if len(sys.argv) > 1:
+        sort_algorithm = sys.argv[1]
+        if sort_algorithm not in implemented_algorithms:
+            print(f'Invalid algorithm: {sort_algorithm}. Saindo...')
+            exit()
+    to_be_sorted = prepare()
+    if sort_algorithm:
+        call_test(sort_algorithm, to_be_sorted)
+        exit()
+    for sort_algorithm in implemented_algorithms:
+        call_test(sort_algorithm, to_be_sorted)

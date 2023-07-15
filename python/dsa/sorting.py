@@ -64,4 +64,5 @@ def bubble_sort_left(sorting_list: List[int], size: int) -> List:
 
 
 def merge_sort(sorting_list: List[int], size: int) -> List:
+    print(f'size: {size}')
     return sorting_list
