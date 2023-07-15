@@ -9,7 +9,8 @@ import sys
 from pprint import pprint
 
 
-sys.path.append(f"{os.path.dirname(os.path.abspath(__file__))}{os.sep}..")
+# DEPRECATED: using PYTHONPATH in .envrc
+# sys.path.append(f"{os.path.dirname(os.path.abspath(__file__))}{os.sep}..")
 from dsa.sorting import (insertion_sort,
                          selection_sort,
                          bubble_sort)

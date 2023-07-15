@@ -6,7 +6,8 @@ import sys
 import os
 
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
+# DEPRECATED: using PYTHONPATH in .envrc
+# sys.path.append(os.path.dirname(os.path.abspath(__file__)) + f'{os.sep}..')
 
 
 from dsa.linked_list import LinkedList, OutOfBoundsException
@@ -44,7 +45,7 @@ def test_linked_list_insert_at():
     linked_list.insert_at(3, 103)
     linked_list.insert_at(5, 105)
     linked_list.insert_at(8, 108)
-    
+
 def test_linked_list_traverse():
     linked_list = LinkedList()
     linked_list.insert_last(1)
@@ -55,7 +56,7 @@ def test_linked_list_traverse():
     linked_list.insert_last(13)
     linked_list.insert_last(21)
     linked_list.traverse(print)
-    
+
 
 
 if __name__ == '__main__':
