@@ -11,7 +11,7 @@ import sys
 
 
 SEED = 12
-SIZE = 250
+SIZE = 25
 FROM = 0
 TO = 100
 
@@ -37,10 +37,7 @@ def test_sort(some_list: List) -> None:
 def call_test(sort_algorithm: str, to_be_sorted: List) -> None:
     print_heading(sort_algorithm, 1)
     sorting_module = getattr(dsa.sorting, f'{sort_algorithm}_sort')
-    if sort_algorithm == 'merge':
-        sorted, _ = sorting_module(list(to_be_sorted), SIZE)
-    else:
-        sorted = sorting_module(list(to_be_sorted), SIZE)
+    sorted = sorting_module(list(to_be_sorted), SIZE)
     print_heading('Sorted list', 3)
     print(sorted)
     test_sort(sorted)

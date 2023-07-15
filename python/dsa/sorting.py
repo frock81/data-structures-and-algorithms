@@ -66,14 +66,18 @@ def bubble_sort_left(sorting_list: List[int], size: int) -> List:
 def merge_sort(sorting_list: Optional[List[int]],
                size: int) -> List:
     if sorting_list is None:
-        return [], 0
+        return []
     if size == 1:
-        return sorting_list, 1
+        return sorting_list
     half = size // 2
+    left_size = half
+    right_size = size - half
     left = sorting_list[0:half]
     right = sorting_list[half:size]
-    left, left_size = merge_sort(sorting_list=left, size=half)
-    right, right_size = merge_sort(sorting_list=right, size=size - half)
+    left = merge_sort(sorting_list=left,
+                      size=left_size)
+    right = merge_sort(sorting_list=right,
+                       size=right_size)
     merged = []
     merged_size = 0
     while True:
@@ -104,4 +108,4 @@ def merge_sort(sorting_list: Optional[List[int]],
         merged_size = merged_size + 1
         right.pop(0)
         right_size = right_size - 1
-    return merged, merged_size
+    return merged
